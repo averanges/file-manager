@@ -1,0 +1,46 @@
+@tailwind base;
+
+html {
+  scroll-behavior: smooth
+}
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 5px;
+}
+ 
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+  /* Custom styling for the input range */
+  .custom-range {
+    width: 100%;
+    height: 5px;
+    background-color: #e2e8f0; /* Gray background color */
+    border-radius: 8px; /* Rounded corners */
+  }
+
+  /* Custom styling for the input range thumb (slider handle) */
+  .custom-range::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: #4299e1; /* Blue color for the thumb */
+    border-radius: 50%; /* Circular shape */
+    cursor: pointer; /* Change cursor on hover */
+  }
+
+  .custom-range:focus {
+    outline: none; /* Remove default focus outline */
+  }
