@@ -4,7 +4,6 @@ import FolderCard from "../../../components/cards/FolderCard"
 import { Doughnut } from "react-chartjs-2"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { opacityColors } from "../../../consts/colors";
-import { useFileChange } from "../../../firebase/firebaseActions";
 import ListItem from "../../../components/cards/ListItem";
 import { useDataSetDoughnut } from "../../../const";
 import { useAppDispatch, useAppSelector } from "../../../store/store/storeHooks";
@@ -23,11 +22,9 @@ interface ICloudPageProps {
 }
 
 const DashboardPage: FC<ICloudPageProps> = () => {
-const { uploadNewFile } = useFileChange()
-
 const dispatch = useAppDispatch()
 const uploadedData = useSelector((state:RootState) => state.management.allData)
-const foldersData = useAppSelector(state => state.management.allFolders)
+const foldersData = useAppSelector(state => state.management.foldersList)
 
 const {images, audio, video, documents, othersFiles, allData} = useSelector((state:RootState) => state.management.fileTypedSizes)
 const { dataSetDoughnut } = useDataSetDoughnut({ documentsFilesSize : documents,  imageFilesSize: images, mediaFilesSize: audio + video, otherFilesSize: othersFiles})
@@ -35,23 +32,29 @@ const { dataSetDoughnut } = useDataSetDoughnut({ documentsFilesSize : documents,
 const [deleteSuccess, setDeleteSuccess] = useState(false)
 
 const colorsArray = Object.values(opacityColors)
-
-
-const mappedFoldersList = Object.keys(foldersData)
+const mappedFoldersList = [...foldersData]
+    .sort((folderA, folderB) => {
+        const dataA = uploadedData.filter(el => el.path.includes(`${folderA.name}/`));
+        const dataB = uploadedData.filter(el => el.path.includes(`${folderB.name}/`));
+        const timestampA = dataA.length > 0 ? Math.max(...dataA.map(file => new Date(file.timestamp).getTime())) : 0;
+        const timestampB = dataB.length > 0 ? Math.max(...dataB.map(file => new Date(file.timestamp).getTime())) : 0;
+        return timestampB - timestampA
+        })
     .slice(0,4)
     .map((el,idx) => 
         <FolderCard 
             key={idx}
             deleteSuccess={deleteSuccess} 
             setDeleteSuccess={setDeleteSuccess} 
-            name={el} 
+            name={el.name} 
             color={colorsArray[idx]}
+            folderPath={el.path}
             />
         )  
 
 
 const openModalWindow = (): void => {
-    dispatch(handleOpenModal({open: true, id: ''}))
+    dispatch(handleOpenModal({open: true, id: 'My Files'}))
 }
 
   return (
@@ -62,13 +65,6 @@ const openModalWindow = (): void => {
                     <div className="flex flex-col gap-2">
                         <h2 className="text-2xl font-bold">My Cloud</h2>
                         <p className="text-slate-400">Hi <span className="text-xl">{auth.currentUser?.displayName}</span>, Welcome Back!</p>
-                    </div>
-                    <div 
-                    className="flex justify-center items-center gap-2 w-32 rounded-lg font-bold text-white text-xl bg-orange-prime 
-                    shadow-md h-14 hover:shadow-lg border-2 hover:border-white duration-500">
-                        <input onChange={(e) => uploadNewFile(e, 'click')}
-                        type="file" name="file" id="file" className="hidden h-full w-full bg-red-500"/>
-                        <label htmlFor="file" className="w-full h-full cursor-pointer flex justify-center items-center">+ Add</label>
                     </div>
                 </div>
                 <div className="px-6 h-[25%] flex gap-5 ">
@@ -100,15 +96,20 @@ const openModalWindow = (): void => {
                     </div>
                     <table className="w-full">
                         <thead>
-                            <tr>
-                                <th className="w-4/12">Name</th>
-                                <th>Size</th>
-                                <th>Folder</th>
+                            <tr className="flex gap-40 px-10">
+                                <th className="flex-grow flex justify-start">Name</th>
+                                <th className="flex gap-20">
+                                    <p>Size</p>
+                                    <p>Folder</p>
+                                </th>
                                 <th>Last Modified</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {uploadedData.slice(0,3).map((el,idx) => <ListItem key={idx} itemName={el.name} downloadURL={el.downloadURL}/>)}
+                            {uploadedData.slice(0, 3).map((el, idx) => (
+                            <ListItem key={idx} name={el.name} downloadURL={el.downloadURL} path={el.path}
+                            fileSize={el.fileSize} fileType={el.fileType} timestamp={el.timestamp} />
+                            ))}
                         </tbody>
                     </table>
                 </div>

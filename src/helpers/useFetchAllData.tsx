@@ -1,23 +1,27 @@
 import { useEffect } from "react"
 import { fetchUploadedData } from "../firebase/firebaseActions"
-import { handleAllData, handleDataLoading, handleNewFileUploaded } from "../store/slices/managementSlice"
-import { useAppDispatch } from "../store/store/storeHooks"
+import { handleActionSuccess, handleAllData, handleDataLoading, handleNewFileUploaded, setUser } from "../store/slices/managementSlice"
+import { useAppDispatch, useAppSelector } from "../store/store/storeHooks"
 import { useSelector } from "react-redux"
 import { RootState } from "../store/store/store"
 
 const useFetchAllData = () => {
-    const isDataLoading = useSelector((state: RootState) => state.management.isDataLoading)
-    const newFileUploaded = useSelector((state: RootState) => state.management.newFileUploaded)
+    const actionSuccess = useAppSelector(state => state.management.actionSuccess)
+    const isDataLoading = useAppSelector(state => state.management.isDataLoading)
+    const newFileUploaded = useAppSelector(state => state.management.newFileUploaded)
+    const isFolderAdded = useAppSelector(state => state.management.newFolderAdded)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(handleNewFileUploaded(false))
+        dispatch(handleActionSuccess(false))
         const fetchData = async () => {
             try {
-                const itemsData = await fetchUploadedData()
-                const updatedData = itemsData.filter(el => !el.path.includes('folders'))
-                console.log(updatedData)
-                dispatch(handleAllData(updatedData))
+                const {itemsData, user} = await fetchUploadedData()
+                const updatedData = itemsData?.filter(el => !el?.path?.includes('folders'))
+                const foldersList = itemsData?.filter(el => el?.path?.includes('folders'))
+                dispatch(handleAllData({updatedData, foldersList}))
+                dispatch(setUser(user))
                 if (updatedData) {
                     dispatch(handleDataLoading(false))
                 }
@@ -26,7 +30,7 @@ const useFetchAllData = () => {
             }
         }
         fetchData()
-    },[newFileUploaded])
+    },[newFileUploaded, isFolderAdded, actionSuccess])
 
     return { isDataLoading }
 }

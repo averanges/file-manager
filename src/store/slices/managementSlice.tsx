@@ -26,7 +26,10 @@ interface IManagementState {
   fileTypedData: IFileTypedData;
   fileTypedSizes: IFileTypedSizes;
   newFileUploaded: boolean,
-  newFolderAdded: boolean
+  newFolderAdded: boolean,
+  user: object,
+  foldersList: object[],
+  actionSuccess: boolean
 }
 
 const initialState: IManagementState = {
@@ -50,7 +53,9 @@ const initialState: IManagementState = {
     allData: 0,
   },
   newFileUploaded: false,
-  newFolderAdded: false
+  newFolderAdded: false,
+  user: {},
+  actionSuccess: false
 };
 
 const calculateFileSizes = (fileArray: IUploadedDataItem[]): number =>
@@ -61,7 +66,8 @@ const managementSlice = createSlice({
   initialState,
   reducers: {
     handleAllData: (state, action: PayloadAction<IUploadedDataItem[]>) => {
-      state.allData = action.payload;
+      state.allData = action.payload.updatedData
+      state.foldersList = action.payload.foldersList
 
       const { allData } = state;
 
@@ -122,10 +128,16 @@ const managementSlice = createSlice({
     },
     handleNewFileUploaded: (state, action: PayloadAction<boolean>) => {
         state.newFileUploaded = action.payload;
-      },
+      },    
+    handleActionSuccess: (state, action: PayloadAction<boolean>) => {
+        state.actionSuccess = action.payload;
+    },
     handleNewFolderAdded: (state, action: PayloadAction<boolean>) => {
         state.newFolderAdded = action.payload;
     },
+    setUser: (state, action: PayloadAction<object>) => {
+      state.user = action.payload;
+  },
   },
 });
 
@@ -135,7 +147,9 @@ export const {
   handleAllFolders,
   handleFoldersLoading,
   handleNewFileUploaded,
-  handleNewFolderAdded
+  handleNewFolderAdded,
+  setUser,
+  handleActionSuccess
 } = managementSlice.actions;
 
 export default managementSlice.reducer;

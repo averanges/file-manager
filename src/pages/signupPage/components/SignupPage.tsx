@@ -2,7 +2,7 @@ import { useState, ChangeEvent, FormEvent } from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import { LogoSVG } from '../../../ui/svg/svg'
 import { auth } from "../../../config/firebaseConfig"
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth"
 
 export interface INewUser {
     name: string,
@@ -15,6 +15,58 @@ export interface INewUserFocusOrBlur {
     email: boolean,
     psw: boolean,
     confirmPsw: boolean
+}
+
+export const validateForm = ({ name, value, setValidationErrors, inputedPsw }: {name: string, value: string}) => {
+  if (name === "email") {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const isValidEmail = emailRegex.test(value);
+    setValidationErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: isValidEmail ? "" : "Please, write a correct email address",
+    }))
+  }
+
+  if (name === "psw") {
+    const passwordLength = [...value].length;
+
+    if (passwordLength < 6 || passwordLength > 20) {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: passwordLength < 6
+          ? "Password should have at least 6 characters"
+          : "Password should have maximum 20 characters",
+      }));
+    } else {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }))
+    }
+  }
+  
+  if (name === "confirmPsw") {
+    if (value !== inputedPsw) {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "Passwords don't match. Please, try again.",
+      }));
+    } else {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }))
+    }
+  }
+
+  if (name === "name") {
+    const nameRegex = /^[a-zA-Z]+$/
+    const isValidName = nameRegex.test(value);
+    setValidationErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: isValidName ? "" : "Name should contain only letters",
+    }))
+  }
 }
 const SignupPage = () => {
     const navigate = useNavigate()
@@ -38,7 +90,7 @@ const SignupPage = () => {
     })
     const addNewUser = (e: ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
-        validateForm({value, name})
+        validateForm({value, name, setValidationErrors, inputedPsw: newUser.psw})
         setNewUser(prevUser => {
            return {...prevUser,[name] : value}
         })
@@ -50,10 +102,11 @@ const SignupPage = () => {
             return;
         }
         try {
-            const userCreated = await createUserWithEmailAndPassword(auth, newUser.email, newUser.psw);
+          const userCreated = await createUserWithEmailAndPassword(auth, newUser.email, newUser.psw)
             if (userCreated) {
                 const currentUser = auth.currentUser;
                 if (currentUser) {
+                    await sendEmailVerification(currentUser)
                     await updateProfile(currentUser, { displayName: newUser.name })
                     .then(() => navigate('/'))
                 } else {
@@ -65,57 +118,6 @@ const SignupPage = () => {
         }
     }
     
-    const validateForm = ({ name, value }: {name: string, value: string}) => {
-        if (name === "email") {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          const isValidEmail = emailRegex.test(value);
-          setValidationErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: isValidEmail ? "" : "Please, write a correct email address",
-          }));
-        }
-      
-        if (name === "psw") {
-          const passwordLength = [...value].length;
-      
-          if (passwordLength < 6 || passwordLength > 20) {
-            setValidationErrors((prevErrors) => ({
-              ...prevErrors,
-              [name]: passwordLength < 6
-                ? "Password should have at least 6 characters"
-                : "Password should have maximum 20 characters",
-            }));
-          } else {
-            setValidationErrors((prevErrors) => ({
-              ...prevErrors,
-              [name]: "",
-            }));
-          }
-        }
-      
-        if (name === "confirmPsw") {
-          if (value !== newUser?.psw) {
-            setValidationErrors((prevErrors) => ({
-              ...prevErrors,
-              [name]: "Passwords don't match. Please, try again.",
-            }));
-          } else {
-            setValidationErrors((prevErrors) => ({
-              ...prevErrors,
-              [name]: "",
-            }));
-          }
-        }
-      
-        if (name === "name") {
-          const nameRegex = /^[a-zA-Z]+$/;
-          const isValidName = nameRegex.test(value);
-          setValidationErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: isValidName ? "" : "Name should contain only letters",
-          }));
-        }
-      };
       const handleBlurInput = (e: ChangeEvent<HTMLInputElement>) => {
         const {  name } = e.target
         setInputBlur(prevBlur => {

@@ -5,6 +5,7 @@ import { handleAuidoPlayer, handleMusicActive } from '../../store/slices/uiSlice
 import MusicControl from './MusicControl'
 import { secondsIntoMinutes } from '../../helpers/secondsInotMinutes'
 import { RootState } from '../../store/store/store'
+import { PauseSVG, PlaySVG } from '../../ui/svg/svg'
 
 const AudioPlayerComponent = () => {
     const dispatch = useAppDispatch();
@@ -62,16 +63,12 @@ const AudioPlayerComponent = () => {
             { trackData.isActive ?
                 <div onClick={toggleAudioPause}
                     className="cursor-pointer hover:text-orange-opacity duration-300" >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className={`w-${size}  h-${size}`}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
-                    </svg>
+                    <PauseSVG size={8}/>
                 </div>
                 :
                 <div onClick={toggleAudioPlay}
                     className="cursor-pointer hover:text-orange-opacity duration-300" >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className={`w-${size}  h-${size}`}>
-                           <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
-                    </svg>
+                    <PlaySVG size={8}/>
                 </div>
             }
             <div className='cursor-pointer hover:text-orange-opacity duration-300'>

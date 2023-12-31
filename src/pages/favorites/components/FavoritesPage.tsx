@@ -1,42 +1,17 @@
-import React from 'react'
+import { useState } from "react"
+import ListItem from "../../../components/cards/ListItem"
+import { useAppSelector } from "../../../store/store/storeHooks"
+import DataListTemplate from "../../../modules/dataListTemplate/components/DataListTemplate"
+import { useLocation } from "react-router-dom"
 
 const FavoritesPage = () => {
-  const allFolders = {
-    firstFolder: {
-      firstSubFolder1: {
-        secondSubFolder1:{},
-        secondSubFolder2: {
-          thirdSubFolder1:{}
-        },
-        secondSubFolder3: {
+  const uploadedData = useAppSelector(state => state.management.allData)
+  const filteredData = uploadedData.filter(el => el.favorites === true)
 
-        }
-      },
-      firstSubFolder2: {
-        secondSubFolder2: {
-          thirdSubFolder1: {},
-          thirdSubFolder2: {
-            forthSubFolder1: {}
-          }
-        }
-      }
-    }
-  }
-
-  const renderFolders = (folders) => {
-    return Object.keys(folders).map((folderName) => (
-      <div key={folderName}>
-        <p>{folderName}</p>
-        {Object.keys(folders[folderName]).length > 0 && (
-          <div style={{ marginLeft: '20px' }}>
-            {renderFolders(folders[folderName])}
-          </div>
-        )}
-      </div>
-    ));
-  }
   return (
-    <div>{renderFolders(allFolders)}</div>
+    <div className="w-full">
+      <DataListTemplate currentFolderData={filteredData} folderAddress="Favorites"/>
+    </div>
   )
 }
 

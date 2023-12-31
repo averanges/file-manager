@@ -291,7 +291,7 @@ const MainPage = () => {
           </div> 
         </div>
         
-        <div className='flex flex-col gap-20'> 
+        <div className='flex flex-col gap-20 mt-20'> 
           <h4 ref={(element) => observedElementsRef.current.push(element)} id='second'
           className={`text-5xl py-5 text-slate-800 text-center tracking-wider duration-1000 ${visibleElements.second ? "opacity-100" : "opacity-0 absolute translate-y-10"}`}>
             Work even more <br /> efficiently with K-Cloud</h4>
@@ -335,13 +335,13 @@ const MainPage = () => {
         </div>
       </div>           
     </div>
-    <div className='w-screen h-screen flex justify-center relative'>
+    <div className='w-screen flex justify-center relative mt-20'>
         <div style={{width: 90 - (1906 - scrollPosition * 1.01)}} 
         className={`h-40 absolute bottom-[13%] right-0 rounded-l-3xl shadow-lg shadow-slate-700 z-30 
         ${visibleElements.sixth ? "" : "translate-x-40"} duration-1000 delay-500 transition-transform`}>
           <img src={abstract2} alt="" className='object-cover rounded-l-3xl h-full w-full'/>
         </div>
-      <div className='w-[65%] mt-10 flex flex-col gap-40 items-center'>
+      <div className='w-[65%] mt-40 flex flex-col gap-40 items-center'>
       <div ref={(element) => observedElementsRef.current.push(element)} id='forth'
       className={`h-[40%] flex w-full mt-40 gap-20 justify-between`}>
           <div className='relative flex gap-2 items-center w-[60%]'>
@@ -383,7 +383,7 @@ const MainPage = () => {
               </button>
           </div>
          </div>
-         <div className='w-screen h-screen flex justify-center relative'>
+         <div className='w-screen flex justify-center relative mt-20'>
             <div ref={(element) => observedElementsRef.current.push(element)} id='fifth'
             className={`bg-[#e6d3a3] w-[40%] h-40 rounded-3xl flex absolute -top-20 shadow-xl shadow-slate-500 z-30 mt-10 
             duration-1000 ${visibleElements.fifth ? "opacity-100" : "opacity-0 absolute translate-y-10"}`}>
@@ -419,7 +419,7 @@ const MainPage = () => {
             ${visibleElements.sixth ? "" : "-translate-y-20"} duration-1000 delay-[1500ms] transition-transform`}>
               <img src={abstract2} alt="" className='object-cover rounded-b-3xl w-full h-full'/>
             </div>
-              <div className='flex gap-2 items-center justify-around w-full mb-10'>
+              <div className='flex gap-2 items-center justify-around w-full mb-20'>
                 <div className='flex gap-5 items-center'>
                   <Link to='https://nickbel.vercel.app' className='w-28'>
                     <img src={logoNick} alt="" className='object-cover'/>

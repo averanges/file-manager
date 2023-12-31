@@ -1,15 +1,15 @@
 import {FunctionComponent} from "react"
 import { DotsSVG, FolderSVG, RightArrowSVG } from "../../ui/svg/svg"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useAppSelector } from "../../store/store/storeHooks"
 
 interface CategoryProps {
   name: string,
   color: string
 }
 const CategoryCard: FunctionComponent<CategoryProps> = ({name, color}) => {
-  const fileTypedData = useSelector(state => state.management.fileTypedData)
-  const fileTypedSizes = useSelector(state => state.management.fileTypedSizes)
+  const fileTypedData = useAppSelector(state => state.management.fileTypedData)
+  const fileTypedSizes = useAppSelector(state => state.management.fileTypedSizes)
   const workNameVersion = [...name].map(el => el === ' ' ? '-' : el.toLowerCase()).join('')
 
   const categorySizes = workNameVersion.includes('media') ? (fileTypedSizes['audio'] + fileTypedSizes['video']) 

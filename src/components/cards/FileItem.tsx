@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../store/store/storeHooks'
 import { handleAuidoPlayer, handleMusicActive } from '../../store/slices/uiSlices'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store/store/store'
+
 export interface IFileItem {
     name: string,
     path?: string,
@@ -25,11 +26,11 @@ const FileItem: FC<IFileItem> = (trackData: IFileItem) => {
     const playAudio = () => {
       dispatch(handleAuidoPlayer(true))
       dispatch(handleMusicActive({ trackData, isActive: true }));
-    };
+    }
   
     const pauseAudio = () => {
       dispatch(handleMusicActive({ ...musicActive, isActive: false }));
-    };
+    }
         return (
             <div className="w-full">
                 <div 

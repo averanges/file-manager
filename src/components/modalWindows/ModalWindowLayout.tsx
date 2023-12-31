@@ -6,11 +6,30 @@ interface IChildren {
 }
 
 const ModalWindowLayout: FC<IChildren> = ({children}) => {
-  const { open } = useAppSelector(state => state.ui.openModal)
+  const openModal = useAppSelector(state => state.ui.openModal)
+  const deleteConfirm = useAppSelector(state => state.ui.deleteConfirm)
+  const renameModal = useAppSelector(state => state.ui.renameModal)
+  const moveAndCopyModal = useAppSelector(state => state.ui.moveAndCopyModal)
+  const userSettingsModal = useAppSelector(state => state.ui.userSettingsModal)
+  const modalsWindow = [openModal.open, deleteConfirm.open, renameModal.open, moveAndCopyModal.open, userSettingsModal.open]
   return (
-    <div className={`${open ? "flex scale-100 z-10" : "flex opacity-0 -z-10"} bg-[rgba(0,0,0,0.5)] w-full h-full absolute justify-center items-center duration-500`}>
-        {children}
-    </div>
+    <>
+    {modalsWindow.some(el => el === true) 
+    ? modalsWindow.map((el, idx) => {
+      if (el === true) {
+        return (
+          <div key={idx} className={`${modalsWindow.some(el => el === true)
+            ? "flex scale-100 z-10" : "flex opacity-0 -z-10"} bg-[rgba(0,0,0,0.5)] w-full h-full absolute justify-center items-center duration-500`}>
+              {children}
+          </div>
+        )
+      }
+      return null
+    })
+    :
+    null
+    }
+    </>
   )
 }
 
