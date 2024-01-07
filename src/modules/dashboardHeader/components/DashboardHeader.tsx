@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, ChangeEvent } from "react"
 import avatar from "../../../assets/avatar.png"
-import { BellSVG, DownArrowSVG, FolderPlusSvg, LogoutSVG, RightArrowSVG, SearchSVG, SettingsSVG, UploadSvg, UserSettingsSvg, UsersListSvg } from "../../../ui/svg/svg"
+import { BellSVG, DownArrowSVG, FolderPlusSvg, LogoutSVG, RightArrowSVG, SearchSVG, SettingsSVG, UploadSvg, UserSettingsSvg } from "../../../ui/svg/svg"
 import { HeaderButton } from "../ui/headerButtons"
-import { useFileChange } from "../../../firebase/firebaseActions"
+import { InputEventWithFiles, useFileChange } from "../../../firebase/firebaseActions"
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../store/store/storeHooks"
 import { handleOpenModal, handleUserSettingsModal } from "../../../store/slices/uiSlices"
@@ -13,17 +13,18 @@ const DashboardHeader = () => {
   const { id } = useParams()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const {avatarImg, userName} = useAppSelector(state => state.management.user)
-  
-  const allData = useAppSelector(state => state.management.allData)
-  const [search, setSearch] = useState('')
   const location = useLocation().pathname
+
+  const {avatarImg, userName} = useAppSelector(state => state.management.user)
+  const allData = useAppSelector(state => state.management.allData)
+
+  const [search, setSearch] = useState('')
+  const [openUserWindow, setOpenUserWindow] = useState(false)
+  const [addNewOpen, setAddNewOpen] = useState(false)
 
   const path = id ? id : "My Files"
 
   const { uploadNewFile } = useFileChange()
-  const [openUserWindow, setOpenUserWindow] = useState(false)
-  const [addNewOpen, setAddNewOpen] = useState(false)
 
   useEffect(() => {
     setAddNewOpen(false)
@@ -31,7 +32,7 @@ const DashboardHeader = () => {
     setOpenUserWindow(false)
   }, [id])
 
-  const toggleUploadFile = (e) => {
+  const toggleUploadFile = (e: InputEventWithFiles) => {
     uploadNewFile(e, 'click', path)
     setAddNewOpen(false)
   }
@@ -45,7 +46,7 @@ const DashboardHeader = () => {
 }
   return ( 
     <div className="h-32 flex justify-center items-center bg-slate-50 rounded-t-full">
-        <div className="w-8/12 h-3/6 gap-12 flex relative">
+        <div className="w-10/12 xl:w-8/12 h-3/6 gap-12 flex relative">
           
           {
           addNewOpen ?
@@ -57,7 +58,7 @@ const DashboardHeader = () => {
             </div>
             <div>
               <input className="h-full w-full hidden" id="fileUpload" type="file"
-              onChange={(e) => toggleUploadFile(e)}/>
+              onChange={(e: ChangeEvent<HTMLInputElement> ) => toggleUploadFile(e as unknown as InputEventWithFiles)}/>
               <label htmlFor="fileUpload"
               className="flex gap-2 hover:text-orange-prime cursor-pointer duration-300">
                 <UploadSvg size={5} />
@@ -68,7 +69,7 @@ const DashboardHeader = () => {
           :
           null
           }
-          <div className="w-28">
+          <div className="w-32 h-full min-w-[100px]">
             {
             id && !location.split('/').includes('category') ? 
             (<div onClick={() => setAddNewOpen(prev => !prev)}
@@ -87,34 +88,37 @@ const DashboardHeader = () => {
                <SearchSVG/>
             </div>
             {search ?
-              <div className="absolute h-48 bg-white w-full shadow-lg rounded-xl top-20 flex flex-col overflow-y-scroll z-10">
-                  {allData.filter(el => el.name.toLowerCase().includes(search.toLowerCase())).length === 0 ? (
-                    <div className="flex justify-center items-center w-full h-full">
-                      <img src={nothing} alt="" className="object-contain w-full h-full"/>
-                    </div>
-                  ) : (
-                    allData.filter(el => el.name.toLowerCase().includes(search.toLowerCase())).map((el, idx) => {
-                      const fileFolder = el.path?.split('/');
-                      return (
-                        <div key={idx}>
-                          <Link
-                            to={`/dashboard/folder/${encodeURIComponent(fileFolder.slice(3, fileFolder?.length - 1).join('/'))}`}
-                            className="flex items-center justify-between text-xl px-5 py-2 hover:bg-orange-opacity group/search"
-                          >
-                            <p className="w-[60%] text-xl">{el.name.length > 30 ? el.name.split('').slice(0, 30).join('') + '...' : el.name}</p>
-                            <p className="text-xl w-[30%] bg-pink-opacity flex justify-center font-semibold text-white -skew-y-2">
-                              {fileFolder.slice(3, fileFolder?.length - 1).pop()?.slice(0, 10)}
-                            </p>
-                            <div className="group-hover/search:text-white group-hover/search:scale-150 duration-300">
-                              <RightArrowSVG />
-                            </div>
-                          </Link>
+            <div className="absolute h-48 bg-white w-full shadow-lg rounded-xl top-20 flex flex-col overflow-y-scroll z-10">
+            {allData.filter(el => el.name.toLowerCase().includes(search.toLowerCase())).length === 0 ? (
+              <div className="flex justify-center items-center w-full h-full">
+                <img src={nothing} alt="" className="object-contain w-full h-full"/>
+              </div>
+            ) : (
+              allData.filter(el => el.name.toLowerCase().includes(search.toLowerCase())).map((el, idx) => {
+                const fileFolder = el.path && el.path.split('/');
+                if (fileFolder) {
+                  return (
+                    <div key={idx}>
+                      <Link
+                        to={`/dashboard/folder/${encodeURIComponent(fileFolder.slice(3, fileFolder.length - 1).join('/'))}`}
+                        className="flex items-center justify-between text-xl px-5 py-2 hover:bg-orange-opacity group/search"
+                      >
+                        <p className="w-[60%] text-xl">{el.name.length > 30 ? el.name.split('').slice(0, 30).join('') + '...' : el.name}</p>
+                        <p className="text-xl w-[30%] bg-pink-opacity flex justify-center font-semibold text-white -skew-y-2">
+                          {fileFolder.slice(3, fileFolder.length - 1).pop()?.slice(0, 10)}
+                        </p>
+                        <div className="group-hover/search:text-white group-hover/search:scale-150 duration-300">
+                          <RightArrowSVG />
                         </div>
-                      );
-                    })
-                  )}
-            </div>
-            
+                      </Link>
+                    </div>
+                  );
+                } else {
+                  return null
+                }
+              })
+            )}
+          </div>
                   : null
                 }
           </div>

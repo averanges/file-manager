@@ -11,7 +11,6 @@ import LoadingSpinner from "./components/animations/LoadingSpinner"
 import useFetchFolders from "./helpers/useFetchFolders"
 import ModalWindowLayout from "./components/modalWindows/ModalWindowLayout"
 import DeleteConfirmWindow from "./components/modalWindows/DeleteConfirmWindow"
-import { useAppSelector } from "./store/store/storeHooks"
 import RenameWindow from "./components/modalWindows/RenameWindow"
 import MoveAndCopyWindow from "./components/modalWindows/MoveAndCopyWindow"
 import UserSettings from "./components/modalWindows/UserSettings"
@@ -35,7 +34,7 @@ const DashboardLayout: FC<IChildren> = ({children}) => {
         </ModalWindowLayout>
         <ImageModalWindow/>
           <DashboardSidebar/>
-          <div className="border-slate-900 border-8 w-full rounded-xl relative">
+          <div className="border-slate-900 border-8 w-full lg:w-[83%] rounded-xl relative">
               <DashboardHeader/>
               <div className="h-full flex justify-center bg-slate-50">
                 {isDataLoading || isFoldersLoading ? <LoadingSpinner/> : children}

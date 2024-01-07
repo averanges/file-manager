@@ -36,7 +36,7 @@ const FolderCard: FC<FolderProps> = ({name, color, setDeleteSuccess, deleteSucce
   }
   
   return (
-    <div className={`h-full bg-${color} w-[20%] rounded-xl flex justify-center relative`}>
+    <div className={`h-full bg-${color} w-full rounded-xl flex justify-center relative`}>
       <div className={`${openSubMenu ? "scale-y-100" : "scale-y-0"} justify-between
       flex transform origin-top bg-white absolute z-2 top-10 rounded-xl
        right-2 w-fit h-fit p-2 shadow-xl flex-col items-end duration-500`}>

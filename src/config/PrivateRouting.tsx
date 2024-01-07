@@ -4,13 +4,10 @@ import FolderPage from "../pages/folderPage/components/FolderPage"
 import DashboardLayout from "../DashboardLayout"
 import FavoritesPage from "../pages/favorites/components/FavoritesPage"
 import UpdatesPage from "../pages/updatesPage/components/UpdatesPage"
-import SettingsPage from "../pages/settingsPage/components/SettingsPage"
-import RecycleBinPage from "../pages/recicleBynPage/components/RecycleBinPage"
 import CategoryPage from "../pages/categoryPage/components/CategoryPage"
 import MainPage from "../MainPage"
 import SignupPage from "../pages/signupPage/components/SignupPage"
 import LoginPage from "../pages/loginPage/components/LoginPage"
-import AllFoldersPage from "../pages/allFoldersPage/components/AllFoldersPage"
 
 export const router = createBrowserRouter([
     {
@@ -34,20 +31,8 @@ export const router = createBrowserRouter([
       element: <DashboardLayout children={<FavoritesPage/>}/>
     },
     {
-      path: '/all-folders',
-      element: <DashboardLayout children={<AllFoldersPage/>}/>
-    },
-    {
       path: '/updates',
       element: <DashboardLayout children={<UpdatesPage/>}/>
-    },
-    {
-      path: '/settings',
-      element: <DashboardLayout children={<SettingsPage/>}/>
-    },
-    {
-      path: '/recycle-bin',
-      element: <DashboardLayout children={<RecycleBinPage/>}/>
     },
     {
       path: '/dashboard/category/:id',

@@ -110,7 +110,7 @@ const MainPage = () => {
           <img src={abstract1} alt="" className='object-cover rounded-r-3xl w-full h-full'/>
         </div>
         <div style={{top: 200 - scrollPosition/2}} 
-        className={`w-[10%] h-fit absolute top-[20%] right-0 rounded-l-3xl shadow-lg shadow-slate-700 z-30 
+        className={`w-[20%] md:w-[15%] lg:w-[10%] h-fit absolute top-[20%] right-0 rounded-l-3xl shadow-lg shadow-slate-700 z-30 
         ${visibleElements.zero ? "" : "translate-x-48"} duration-1000 delay-500 transition-transform`}>
           <img src={abstract2} alt="" className='object-cover rounded-l-3xl'/>
         </div>
@@ -118,31 +118,35 @@ const MainPage = () => {
       className={`bg-slate-700/70 w-[95%] h-[95%] rounded-3xl text-white flex flex-col items-center relative overflow-hidden duration-700
        ${visibleElements.zero ? "scale-x-100" : "scale-x-0"} origin-center`}>
         <div style={{height: 130 - scrollPosition/5}} 
-        className={`w-[15%] absolute bottom-0 left-40 rounded-t-3xl shadow-sm shadow-slate-700 duration-1000 delay-500 transition-transform
+        className={`w-[25%] md:w-[15%] absolute bottom-0 hidden md:flex left-5 md:left-40 rounded-t-3xl shadow-sm
+         shadow-slate-700 duration-1000 delay-500 transition-transform
         ${visibleElements.zero ? "" : "translate-y-48"}`}>
           <img src={abstract4} alt="" className='object-cover rounded-t-3xl w-full h-full'/>
         </div>
         <div style={{bottom: 130 - scrollPosition/5}} 
-        className={`w-[15%] h-fit absolute right-40 rounded-3xl shadow-lg shadow-slate-700 duration-1000 delay-500 transition-opacity
+        className={`lg:w-[15%] md:w-[20%] w-[30%] h-fit hidden md:flex absolute md:right-20 right-3 rounded-3xl 
+        shadow-lg shadow-slate-700 duration-1000 delay-500 transition-opacity
         ${visibleElements.zero ? "opacity-100" : "opacity-0"} `}>
           <img src={abstract3} alt="" className='object-cover rounded-3xl'/>
         </div>
-        <div className={`w-8/12 h-fit mt-12 flex justify-between duration-1000 delay-150 ${visibleElements.zero ? "opacity-100" : "opacity-0"}`}>
-          <div className='text-2xl flex items-center'>
+        <div className={`w-11/12 md:w-8/12 h-fit mt-12 flex justify-between duration-1000 delay-150 ${visibleElements.zero ? "opacity-100" : "opacity-0"}`}>
+          <div className='text-xl sm:text-2xl flex items-center'>
             <LogoSVG/>
             <Link to='/'>K-Cloud.io</Link>
           </div>
           <div className='flex gap-6'>
             <Link to='/auth/login' onMouseEnter={() => setMoveLoginButton(true)} onMouseLeave={() => setMoveLoginButton(false)}
-            className='bg-slate-400 w-16 h-16 flex justify-center items-center rounded-lg relative cursor-pointer'>
+            className='bg-slate-400 w-[50%] h-full sm:w-16 sm:h-16 flex justify-center items-center rounded-lg relative cursor-pointer'>
               <div className={`absolute top-5 duration-300 ${moveLoginButton ? "opacity-0 translate-x-5" :'opacity-100'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 
+                  2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                 </svg>
               </div>
               <div className={`absolute top-5 left-0 duration-300 ${moveLoginButton ? "opacity-100 translate-x-5" :'opacity-0'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 
+                  2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                 </svg>
               </div>
             </Link>
@@ -153,13 +157,13 @@ const MainPage = () => {
           </div>
         </div>
         <div className='w-8/12 h-full flex items-center justify-center'>
-          <div className={`w-8/12 h-[70%] flex justify-between flex-col items-center duration-1000 delay-150 ${visibleElements.zero ? "opacity-100" : "opacity-0"}`}>
-            <h3 className='text-7xl text-center tracking-wide '>Like Google Disc,<span className='text-5xl tracking-widest text-slate-200 italic'> 
+          <div className={`w-11/12 md:w-8/12 h-[80%] sm:h-[70%] flex justify-between flex-col items-center duration-1000 delay-150 ${visibleElements.zero ? "opacity-100" : "opacity-0"}`}>
+            <h3 className='text-5xl md:text-6xl lg:text-7xl text-center tracking-wide '>Like Google Disc,
+            <span className='text-3xl md:text-4xl lg:text-5xl tracking-widest text-slate-200 italic'> 
             <br />but belongs only to you</span></h3>
-            {/* <h4 className='text-slate-300 text-center text-2xl'>The small safe hat</h4> */}
             <div onClick={handlePecerntCounter}
             onMouseEnter={() => setMoveAddButton(true)} onMouseLeave={() => setMoveAddButton(false)}
-            className='w-[35%] h-[40%] rounded-3xl border-2 border-slate-300 border-dashed flex justify-center items-center cursor-pointer'>
+            className='w-8/12 md:w-[50%] lg:w-[35%] h-[30%] sm:h-[40%] rounded-3xl border-2 border-slate-300 border-dashed flex justify-center items-center cursor-pointer'>
                 <div className='w-[90%] h-[90%] bg-slate-400/50 rounded-3xl flex flex-col justify-center items-center relative overflow-hidden'>
                   {isCounterActive ? 
                   <>
@@ -198,7 +202,7 @@ const MainPage = () => {
         </div>
       </div>
     </div>
-    <div className='w-screen h-screen bg-slate-100 flex justify-center'>
+    <div className='md:w-screen h-screen bg-slate-100 md:flex justify-center hidden'>
       <div className='w-[65%] h-full flex-col flex gap-20'>
         <div id='first'
         className={`flex justify-between gap-10 h-[40%] mt-20 items-center`} 
@@ -335,7 +339,7 @@ const MainPage = () => {
         </div>
       </div>           
     </div>
-    <div className='w-screen flex justify-center relative mt-20'>
+    <div className='md:w-screen md:flex hidden justify-center relative mt-20'>
         <div style={{width: 90 - (1906 - scrollPosition * 1.01)}} 
         className={`h-40 absolute bottom-[13%] right-0 rounded-l-3xl shadow-lg shadow-slate-700 z-30 
         ${visibleElements.sixth ? "" : "translate-x-40"} duration-1000 delay-500 transition-transform`}>

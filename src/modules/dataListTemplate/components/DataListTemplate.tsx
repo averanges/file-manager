@@ -31,7 +31,7 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
     const allData = useAppSelector(state => state.management.allData)
     const subFolderData = currentFileDetails[0]?.path.split('/').includes('folders') ? handleSubFolderData({data: allData, name: currentFileDetails[0]?.name}) : null
 
-    const previewFile = (currentDownloadLink) => {
+    const previewFile = (currentDownloadLink: string) => {
         window.open(currentDownloadLink, '_blank')
     }
       const folderLinks = allFolders && Object.keys(allFolders).length > 0 ? 
@@ -104,7 +104,7 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
       }
       return (
         <div className="flex w-full h-full gap-10 px-5">
-          <div className="flex flex-col gap-5 w-[75%]">
+          <div className="flex flex-col gap-5 w-full xl:w-[75%]">
             <div className="flex w-full justify-between">
                <h3 className="text-3xl ml-10 tracking-widest">{folderAddress}</h3>
               { 
@@ -213,7 +213,7 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
             setCurrentFileDetails={setCurrentFileDetails} setOpenListItemMenu={setOpenListItemMenu}/>
             }
           </div>
-          <div className="w-[25%] h-full flex flex-col gap-5">
+          <div className="w-[25%] h-full flex-col gap-5 xl:flex hidden">
             <h3 className="text-xl text-slate-400">{currentFileDetails.length && currentFileDetails[0].name ? currentFileDetails[0].name : folderAddress}</h3>
             <div className="w-full h-1/2 bg-white shadow-md shadow-slate-300 rounded-2xl flex flex-col items-center gap-2">
               {currentFileDetails.length <= 1 && currentFileDetails[0]?.fileTypeCategory === "Image" ?

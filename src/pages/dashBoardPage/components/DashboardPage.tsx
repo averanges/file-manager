@@ -60,7 +60,7 @@ const openModalWindow = (): void => {
   return (
     <>
         <div className="w-11/12 h-full flex">
-            <div className="w-8/12 h-full flex flex-col gap-5">
+            <div className="w-full xl:w-8/12 h-full flex flex-col gap-5">
                 <div className="flex justify-between px-6 h-2/12">
                     <div className="flex flex-col gap-2">
                         <h2 className="text-2xl font-bold">My Cloud</h2>
@@ -75,7 +75,7 @@ const openModalWindow = (): void => {
                         <p className="text-2xl font-bold">Recent Folders</p>
                         <Link to='/all-folders' className="text-orange-prime underline text-lg cursor-pointer">See More</Link>
                     </div>
-                    <div className="flex gap-20 h-full">
+                    <div className="flex justify-between gap-10 h-full">
                         {mappedFoldersList}
                         {mappedFoldersList.length < 4 ? 
                        ( <div 
@@ -105,7 +105,7 @@ const openModalWindow = (): void => {
                                 <th>Last Modified</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="w-full">
                             {uploadedData.slice(0, 3).map((el, idx) => (
                             <ListItem key={idx} name={el.name} downloadURL={el.downloadURL} path={el.path}
                             fileSize={el.fileSize} fileType={el.fileType} timestamp={el.timestamp} />
@@ -114,7 +114,7 @@ const openModalWindow = (): void => {
                     </table>
                 </div>
             </div>
-            <div className="w-4/12 flex gap-10 flex-col items-center">
+            <div className="hidden xl:w-4/12 xl:flex gap-10 flex-col items-center">
                 <h2 className="text-2xl font-bold">Storage Details</h2>
                 <Doughnut data={dataSetDoughnut}/>
                 <div className="flex justify-center flex-col gap-2">

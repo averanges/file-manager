@@ -5,12 +5,12 @@ import { getDatabase } from "firebase/database"
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBNGKMaNtKPegw-5Z59ghA-u2sscLGD3po",
-  authDomain: "file-management-system-741d3.firebaseapp.com",
-  projectId: "file-management-system-741d3",
-  storageBucket: "file-management-system-741d3.appspot.com",
-  messagingSenderId: "629910845660",
-  appId: "1:629910845660:web:7ad68b76f5ced7f0525c19"
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.Auth_Domain,
+  projectId: process.env.Project_Id,
+  storageBucket: process.env.Storage_Bucket,
+  messagingSenderId: process.env.Messaging_SenderId,
+  appId: process.env.App_Id
 };
 
 const firebaseApp = initializeApp(firebaseConfig);

@@ -27,7 +27,10 @@ interface IManagementState {
   fileTypedSizes: IFileTypedSizes;
   newFileUploaded: boolean,
   newFolderAdded: boolean,
-  user: object,
+  user: {
+    userName: string,
+    avatarImg: string
+  },
   foldersList: object[],
   actionSuccess: boolean
 }
@@ -54,7 +57,12 @@ const initialState: IManagementState = {
   },
   newFileUploaded: false,
   newFolderAdded: false,
-  user: {},
+  user: {
+    avatarImg: '',
+    userName: '',
+
+  },
+  foldersList: [],
   actionSuccess: false
 };
 
@@ -66,8 +74,8 @@ const managementSlice = createSlice({
   initialState,
   reducers: {
     handleAllData: (state, action: PayloadAction<IUploadedDataItem[]>) => {
-      state.allData = action.payload.updatedData
-      state.foldersList = action.payload.foldersList
+      state.allData = action.payload?.updatedData
+      state.foldersList = action.payload?.foldersList
 
       const { allData } = state;
 
@@ -135,7 +143,7 @@ const managementSlice = createSlice({
     handleNewFolderAdded: (state, action: PayloadAction<boolean>) => {
         state.newFolderAdded = action.payload;
     },
-    setUser: (state, action: PayloadAction<object>) => {
+    setUser: (state, action) => {
       state.user = action.payload;
   },
   },
