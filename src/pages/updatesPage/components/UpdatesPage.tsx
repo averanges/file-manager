@@ -1,9 +1,4 @@
-import { useSelector } from "react-redux"
-import FileItem from "../../../components/cards/FileItem"
-import { useFileChange } from "../../../firebase/firebaseActions"
-import { RootState } from "../../../store/store/store"
 import DataListTemplate from "../../../modules/dataListTemplate/components/DataListTemplate"
-import { useLocation } from "react-router-dom"
 import { useAppSelector } from "../../../store/store/storeHooks"
 
 const UpdatesPage = () => {

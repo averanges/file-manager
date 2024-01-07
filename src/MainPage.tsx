@@ -50,10 +50,17 @@ const MainPage = () => {
     }
   }, [percentCounter])
 
-  const observedElementsRef = useRef([]);
-  const [visibleElements, setVisibleElements] = useState({});
+  const observedElementsRef = useRef<any[]>([]);
+  const [visibleElements, setVisibleElements] = useState({
+    zero: false,
+    first: false,
+    second: false,
+    third: false,
+    forth: false,
+    fifth: false,
+    sixth: false,
+  });
 
-  console.log(visibleElements)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {

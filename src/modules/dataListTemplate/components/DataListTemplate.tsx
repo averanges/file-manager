@@ -13,7 +13,7 @@ import ImageLoader from "../../../pages/categoryPage/components/ImageLoader"
 
 interface IDatalListTeplate  {
   folderAddress?: string,
-  folderLinks: object[],
+  folderLinks?: object[],
   currentFolderData: object[]
 }
 const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate) => {
