@@ -45,7 +45,7 @@ const DashboardHeader = () => {
     setOpenUserWindow(false)
 }
   return ( 
-    <div className="h-32 flex justify-center items-center bg-slate-50 rounded-t-full">
+    <div className=" hidden h-32 md:flex justify-center items-center bg-slate-50 rounded-t-full">
         <div className="w-10/12 xl:w-8/12 h-3/6 gap-12 flex relative">
           
           {

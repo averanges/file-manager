@@ -132,7 +132,7 @@ const SignupPage = () => {
       }
   return (
     <div className=' w-screen h-screen flex justify-center items-center bg-black/75 text-white'>
-        <div className='flex flex-col gap-5 w-[25%]'>
+        <div className='flex flex-col gap-5 w-[75%] sm:w-[50%] lg:w-[25%]'>
           <div className="flex justify-center items-center gap-2 cursor-pointer font-bold">
             <LogoSVG/>
             <h2 className='text-2xl'>K-Cloud.io</h2>

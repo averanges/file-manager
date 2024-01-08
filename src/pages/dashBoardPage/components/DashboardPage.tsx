@@ -1,4 +1,4 @@
-import {useState, FC, Dispatch, SetStateAction} from "react"
+import {useState, FC, Dispatch, SetStateAction, useEffect} from "react"
 import CategoryCard from "../../../components/cards/CategoryCard"
 import FolderCard from "../../../components/cards/FolderCard"
 import { Doughnut } from "react-chartjs-2"
@@ -13,6 +13,7 @@ import { auth } from "../../../config/firebaseConfig";
 import { Link } from "react-router-dom";
 import categoryTypes from "./consts/categoryConsts";
 import { RootState } from "../../../store/store/store";
+import MobileDashboardPage from "./MobileDashboardPage";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -30,7 +31,20 @@ const {images, audio, video, documents, othersFiles, allData} = useSelector((sta
 const { dataSetDoughnut } = useDataSetDoughnut({ documentsFilesSize : documents,  imageFilesSize: images, mediaFilesSize: audio + video, otherFilesSize: othersFiles})
 
 const [deleteSuccess, setDeleteSuccess] = useState(false)
+const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
+useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window])
+  
 const colorsArray = Object.values(opacityColors)
 const mappedFoldersList = [...foldersData]
     .sort((folderA, folderB) => {
@@ -59,7 +73,10 @@ const openModalWindow = (): void => {
 
   return (
     <>
-        <div className="w-11/12 h-full flex">
+        { windowWidth < 576 ? 
+        <MobileDashboardPage/>
+        :
+            <div className="w-11/12 h-full flex">
             <div className="w-full xl:w-8/12 h-full flex flex-col gap-5">
                 <div className="flex justify-between px-6 h-2/12">
                     <div className="flex flex-col gap-2">
@@ -124,7 +141,7 @@ const openModalWindow = (): void => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>}
     </>
   )
 }

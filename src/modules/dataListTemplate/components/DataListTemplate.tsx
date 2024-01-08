@@ -16,6 +16,7 @@ interface IDatalListTeplate  {
   folderLinks?: object[],
   currentFolderData: object[]
 }
+
 const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate) => {
     const { id } = useParams()
     const location = useLocation().pathname
@@ -103,8 +104,8 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
         setCurrentFileDetails([])
       }
       return (
-        <div className="flex w-full h-full gap-10 px-5">
-          <div className="flex flex-col gap-5 w-full xl:w-[75%]">
+        <div className="flex w-full h-full gap-10 md:px-5">
+          <div className="flex flex-col md:gap-5 w-full xl:w-[75%]">
             <div className="flex w-full justify-between">
                <h3 className="text-3xl ml-10 tracking-widest">{folderAddress}</h3>
               { 
@@ -188,8 +189,8 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
             </div>
             {
             folderAddress !== "Images" ?
-            (<table className="w-full overflow-y-scroll h-full mb-28">
-                <thead>
+            (<table className="w-full overflow-y-scroll h-full md:mb-28">
+                <thead className="hidden md:block">
                     <tr className="flex gap-40 px-10">
                          <th className="flex-grow">
                           <p className="w-fit cursor-pointer hover:text-orange-prime duration-300 ml-8">Name</p>

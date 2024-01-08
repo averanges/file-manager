@@ -47,9 +47,10 @@ const DashboardSidebar = () => {
     setOpenSubFolder(prev => !prev);
 }
   return (
-    <div className="bg-slate-900 lg:w-[17%] text-white text-2xl hidden lg:flex flex-col items-center justify-between py-8 cursor-pointer overflow-x-hidden">
+    <div className="bg-slate-900 lg:w-[17%] h-full text-white text-2xl flex
+    flex-col items-center justify-between py-8 cursor-pointer overflow-x-hidden">
         <div className="flex gap-20 flex-col w-full">
-            <Link to="/" className="flex items-center gap-2 ml-5"> 
+            <Link to="/" className="flex items-center gap-2 translate-x-[25%]"> 
                 <LogoSVG/>
                 <h2>K-Cloud.io</h2>
             </Link>

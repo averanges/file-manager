@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { IUploadedDataItem } from '../../firebase/firebaseActions'
 import { useAppSelector } from '../../store/store/storeHooks'
-import { CalendarSVG, FolderSVG } from '../../ui/svg/svg'
+import { CalendarSVG, DotsSVG, FolderSVG } from '../../ui/svg/svg'
 import { useLocation } from 'react-router-dom'
 
 export const fileSizeToBytes = (fileSize: number) => {
@@ -28,6 +28,14 @@ export const getFileFolder = ({path, name, userId}) => {
 
   return fileFolderArray[fileFolderArray.length - 1]
 }
+
+const colorByFileType = {
+  Application: "#FF8132",
+  Video: "#7CA1FF",
+  Audio: "#FF7DA0",
+  Image: "#9878DD"
+}
+
 const ListItem = ({
   name,
   url,
@@ -68,10 +76,10 @@ const ListItem = ({
   }, [currentFileDetails])
   return (
     <tr className={`hover:bg-[rgba(255,125,160,0.5)] cursor-pointer duration-500
-     w-full flex justify-between items-center px-5 gap-10 group/item
+     w-full flex justify-between items-center md:px-5 md:gap-10 group/item
       ${clicked ? 'bg-[rgba(255,125,160,0.5)]' : ''}`}
       onClick={() => setClicked(prev => !prev)}>
-          <td className="flex items-center gap-4 w-fit ml-2 my-2 border-r-[1px] px-2 border-slate-100 flex-grow">
+          <td className="flex items-center gap-4 w-full md:w-fit ml-2 my-2 md:border-r-[1px] px-2 border-slate-100 flex-grow">
 
             {
             location !== "/" ? <input onChange={(e) => setClicked(e.target.checked)} checked={clicked}
@@ -80,16 +88,17 @@ const ListItem = ({
             null
             }
             
-            <div className="bg-purple-prime text-white rounded-2xl w-16 h-10 flex justify-center items-center font-semibold">
+            <div style={{backgroundColor: colorByFileType[fileTypeCategory]}}
+            className="text-white rounded-2xl w-16 h-10 flex justify-center items-center font-semibold">
               {fileTypeName !== undefined && fileTypeName?.length > 5 ? fileTypeName?.slice(0,5).toUpperCase() : fileTypeName?.toUpperCase()}
              </div>
-            <p className="text-xl">{name.length > 30 ? name.slice(0,30) + "..." : name}</p>
+            <p className="text-xl">{name.length > 15 ? name.slice(0,15) + "..." : name}</p>
           </td>
-         <td className="font-semibold translate-x-[30%]">
+         <td className="font-semibold translate-x-[30%] hidden md:flex">
              <p>{fileSizeToBytes(fileSize)}</p>
          </td>
             <td>
-              <div className="flex items-center gap-2 justify-center bg-slate-200 rounded-full py-2 px-4 min-w-[150px]">
+              <div className="hidden md:flex items-center gap-2 justify-center bg-slate-200 rounded-full py-2 px-4 min-w-[150px]">
                  <div className="w-2 h-2 bg-purple-prime rounded-full"/>
                  {location.split('/').some(el => el === 'folder') ?
                   <p>{fileTypeCategory}</p>
@@ -105,13 +114,18 @@ const ListItem = ({
               </div>
         </td>
          <td>
-             <div className="flex justify-center gap-2">
+             <div className="hidden md:flex justify-center gap-2">
                 <div>
                      <CalendarSVG/>
                 </div>
                  <p>{formattedDate}</p>
             </div>
          </td>
+         <div className='md:hidden'>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+          </svg>
+         </div>
      </tr>
   )
 }

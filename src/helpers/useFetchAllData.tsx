@@ -2,8 +2,6 @@ import { useEffect } from "react"
 import { fetchUploadedData } from "../firebase/firebaseActions"
 import { handleActionSuccess, handleAllData, handleDataLoading, handleNewFileUploaded, setUser } from "../store/slices/managementSlice"
 import { useAppDispatch, useAppSelector } from "../store/store/storeHooks"
-import { useSelector } from "react-redux"
-import { RootState } from "../store/store/store"
 
 const useFetchAllData = () => {
     const actionSuccess = useAppSelector(state => state.management.actionSuccess)
