@@ -1,4 +1,4 @@
-# Your Project Name
+# File Manager
 
 A file management system with features for uploading, downloading files, and streaming music. Built with Firebase, Tailwind CSS, React, Redux, and other small libraries.
 
@@ -9,27 +9,20 @@ A file management system with features for uploading, downloading files, and str
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Tech Stack](#tech-stack)
-- [License](#license)
 
 ## Status 
 
-   In progress  [true]
+   In progress  [TRUE]
 
 ## Preview Screenshots
 
-![Dashboard Section](https://add.pics/JqoIu6)
+![Dashboard Section](https://add.pics/images/2024/01/13/Dashboard.png)
 
-![Main Section](https://add.pics/JqoDtL)
+![Main Section](https://add.pics/images/2024/01/13/StarterPage.png)
 
 ## Introduction
 
-Briefly describe your project, its main features, and its purpose.
-
-## Screenshots
-
-![Projects Section](https://add.pics/images/2024/01/10/projects.png)
-
-![Contact Section](https://add.pics/images/2024/01/10/contact.png)
+Managing files and enjoying music has never been easier! Whether you need a secure place to store your files or want to stream your favorite tunes, our file management system has got you covered. With Firebase handling authentication and storage, React providing a dynamic and intuitive user interface, and Tailwind CSS ensuring a sleek and responsive design, this project aims to streamline your file management experience.
 
 ## Features
 
@@ -41,9 +34,8 @@ Briefly describe your project, its main features, and its purpose.
 
    1. Clone the repository:
 
-      ```bash
-      git clone https://github.com/your-username/your-project.git
-      cd your-project
+      git clone https://github.com/your-username/file-manager.git
+      cd file-manager
       npm install
 
    2. Set up Firebase:
@@ -75,7 +67,3 @@ Provide examples or detailed instructions on how users can use your project. Inc
 - Firebase
 - Tailwind CSS
    ...
-
-## License
-
-This project is licensed under the MIT License.
