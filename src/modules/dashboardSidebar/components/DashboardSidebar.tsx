@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { SidebarButtonsArray1, SidebarButtonsArray2 } from "../consts/sidebarButtonsArrays"
+import { SidebarButtonsArray1 } from "../consts/sidebarButtonsArrays"
 import { DownArrowSVG, FolderSVG, LogoSVG, LogoutSVG, RightArrowSVG, SettingsSVG} from "../../../ui/svg/svg"
 import { mappingArrayFunc } from "../helpers/mappingArrayFunction"
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { auth } from "../../../config/firebaseConfig"
 import { RootState } from "../../../store/store/store"
 import { useSelector } from "react-redux"
@@ -47,7 +47,7 @@ const DashboardSidebar = () => {
     setOpenSubFolder(prev => !prev);
 }
   return (
-    <div className="bg-slate-900 lg:w-[17%] h-full text-white text-2xl flex
+    <div className="bg-slate-900 sm:min-w-[150px] lg:w-[17%] h-full text-white text-2xl flex
     flex-col items-center justify-between py-8 cursor-pointer overflow-x-hidden">
         <div className="flex gap-20 flex-col w-full">
             <Link to="/" className="flex items-center gap-2 translate-x-[25%]"> 

@@ -148,16 +148,12 @@ const openModalWindow = (): void => {
 
 export default DashboardPage
 
-// const CloudPage = () => {
-//   return (
-//   <div className="bg-blue-opacity">CloudPage</div>
-// <div className="bg-purple-opacity">CloudPage</div>
-// <div className="bg-pink-opacity">CloudPage</div>
-// <div className="bg-orange-opacity">CloudPage</div>
-// <div className="bg-blue-prime">CloudPage</div>
-// <div className="bg-pink-prime">CloudPage</div>
-// <div className="bg-purple-prime">CloudPage</div> 
-//   )
-// }
 
-// export default CloudPage
+// "orange-prime" : "#FF8132",
+// "orange-opacity" : "rgba(255,129,50,0.5)",
+// "blue-prime" : "#7CA1FF",
+// "blue-opacity" : "rgba(124,161,255,0.5)",
+// "pink-prime" : "#FF7DA0",
+// "pink-opacity" : "rgba(255,125,160,0.5)",
+// "purple-prime" : "#9878DD",
+// "purple-opacity" : "rgba(152,120,221,0.5)",

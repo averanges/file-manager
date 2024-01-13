@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react"
 import ListItem, { fileSizeToBytes, formatDate } from "../../../components/cards/ListItem"
 import { useAppDispatch, useAppSelector } from "../../../store/store/storeHooks"
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
-import { IUploadedDataItem, addToFavorite, renameFile } from "../../../firebase/firebaseActions"
-import { DeleteSVG, DownloadSVG, DuplicateSvg, FolderOpenSvg, FolderSVG, GlassSvg, PauseSVG, PlaySVG, PreviewSVG, RenameSvg, ShareSVG, StarSvg, WebLinkSVG } from "../../../ui/svg/svg"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { addToFavorite } from "../../../firebase/firebaseActions"
+import { DeleteSVG, DownloadSVG, DuplicateSvg, FolderSVG, GlassSvg, PauseSVG, PlaySVG, PreviewSVG, RenameSvg, StarSvg } from "../../../ui/svg/svg"
 import { saveAs } from 'file-saver'
 import { handleAuidoPlayer, handleDeleteConfirm, handleMoveAndCopy, handleMusicActive, handleOpenFullImage, handleRenameAction } from "../../../store/slices/uiSlices"
 import { generateFolderLinks } from "../../../pages/folderPage/components/FolderPage"
-import { handleActionSuccess } from "../../../store/slices/managementSlice"
 import { handleSubFolderData } from "../../../components/cards/FolderCard"
 import ImageLoader from "../../../pages/categoryPage/components/ImageLoader"
 

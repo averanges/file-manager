@@ -1,4 +1,4 @@
-import {FC, ReactNode, useEffect, useState} from "react"
+import {FC, ReactNode} from "react"
 
 import DashboardHeader from "./modules/dashboardHeader/components/DashboardHeader" 
 import DashboardSidebar from "./modules/dashboardSidebar/components/DashboardSidebar" 
@@ -14,9 +14,6 @@ import DeleteConfirmWindow from "./components/modalWindows/DeleteConfirmWindow"
 import RenameWindow from "./components/modalWindows/RenameWindow"
 import MoveAndCopyWindow from "./components/modalWindows/MoveAndCopyWindow"
 import UserSettings from "./components/modalWindows/UserSettings"
-import { HomeSVG, SearchSVG } from "./ui/svg/svg"
-import DataListTemplate from "./modules/dataListTemplate/components/DataListTemplate"
-import { useAppSelector } from "./store/store/storeHooks"
 
 interface IChildren {
   children: ReactNode
@@ -37,7 +34,7 @@ const DashboardLayout: FC<IChildren> = ({children}) => {
         </ModalWindowLayout>
         <ImageModalWindow/>
           <DashboardSidebar/>
-          <div className="border-slate-900 md:border-8 w-full lg:w-[83%] rounded-xl relative">
+          <div className="border-slate-900 sm:border-8 w-full lg:w-[83%] rounded-xl relative">
               <DashboardHeader/>
               <div className="h-full flex justify-center bg-slate-50">
                 {isDataLoading || isFoldersLoading ? <LoadingSpinner/> : children}
