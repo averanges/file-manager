@@ -18,6 +18,7 @@ interface IFileTypedSizes {
   allData: number;
 }
 
+
 interface IManagementState {
   allData: IUploadedDataItem[];
   isDataLoading: boolean;
@@ -29,9 +30,10 @@ interface IManagementState {
   newFolderAdded: boolean,
   user: {
     userName: string,
-    avatarImg: string
+    avatarImg: string,
+    userId: string
   },
-  foldersList: object[],
+  foldersList: IUploadedDataItem[],
   actionSuccess: boolean
 }
 
@@ -60,6 +62,7 @@ const initialState: IManagementState = {
   user: {
     avatarImg: '',
     userName: '',
+    userId: ''
 
   },
   foldersList: [],
@@ -73,7 +76,7 @@ const managementSlice = createSlice({
   name: "management",
   initialState,
   reducers: {
-    handleAllData: (state, action: PayloadAction<IUploadedDataItem[]>) => {
+    handleAllData: (state, action: PayloadAction<{updatedData: IUploadedDataItem[], foldersList: IUploadedDataItem[]}>) => {
       state.allData = action.payload?.updatedData
       state.foldersList = action.payload?.foldersList
 
@@ -97,7 +100,8 @@ const managementSlice = createSlice({
       typeof(el.fileType) !== "undefined" && el.fileType.includes("video")
       );
       state.fileTypedData.othersFiles = allData.filter(
-        (el) =>
+        (el) =>{
+        if (el.fileType) {
           !el.fileType.includes("text") &&
           !el.fileType.includes("audio") &&
           !el.fileType.includes("image") &&
@@ -106,7 +110,8 @@ const managementSlice = createSlice({
           !el.name.includes("pdf") &&
           !el.name.includes("ppt") &&
           !el.name.includes("pptx")
-      );
+        }
+      })
 
       state.fileTypedSizes.audio = calculateFileSizes(
         state.fileTypedData.audio

@@ -48,23 +48,25 @@ useEffect(() => {
 const colorsArray = Object.values(opacityColors)
 const mappedFoldersList = [...foldersData]
     .sort((folderA, folderB) => {
-        const dataA = uploadedData.filter(el => el.path.includes(`${folderA.name}/`));
-        const dataB = uploadedData.filter(el => el.path.includes(`${folderB.name}/`));
+        const dataA = uploadedData.filter(el => el?.path?.includes(`${folderA.name}/`));
+        const dataB = uploadedData.filter(el => el?.path?.includes(`${folderB.name}/`));
         const timestampA = dataA.length > 0 ? Math.max(...dataA.map(file => new Date(file.timestamp).getTime())) : 0;
         const timestampB = dataB.length > 0 ? Math.max(...dataB.map(file => new Date(file.timestamp).getTime())) : 0;
         return timestampB - timestampA
         })
     .slice(0,4)
-    .map((el,idx) => 
-        <FolderCard 
+    .map((el,idx) => {
+    if (el.path) {
+        return <FolderCard 
             key={idx}
             deleteSuccess={deleteSuccess} 
             setDeleteSuccess={setDeleteSuccess} 
             name={el.name} 
             color={colorsArray[idx]}
-            folderPath={el.path}
+            folderPath={el?.path}
             />
-        )  
+    }
+        })  
 
 
 const openModalWindow = (): void => {
@@ -148,7 +150,7 @@ const openModalWindow = (): void => {
 
 export default DashboardPage
 
-
+// <div className="bg-blue-opacity"></div>
 // "orange-prime" : "#FF8132",
 // "orange-opacity" : "rgba(255,129,50,0.5)",
 // "blue-prime" : "#7CA1FF",

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, SetStateAction } from 'react'
 import { IUploadedDataItem } from '../../firebase/firebaseActions'
 import { useAppSelector } from '../../store/store/storeHooks'
 import { CalendarSVG, DotsSVG, FolderSVG } from '../../ui/svg/svg'
@@ -20,7 +20,7 @@ export const formatDate = (timestamp: string) => {
 
   return formattedDate
 }
-export const getFileFolder = ({path, name, userId}) => {
+export const getFileFolder = ({path, name, userId} : {path: string, name: string, userId: string}) => {
   const basePath = "uploads/users/"
   const baseUserPath = basePath + userId
   const fileFolderWithoutName = path?.replace(name, '')
@@ -29,11 +29,17 @@ export const getFileFolder = ({path, name, userId}) => {
   return fileFolderArray[fileFolderArray.length - 1]
 }
 
-const colorByFileType = {
+const colorByFileType: {[key: string]: string} = {
   Application: "#FF8132",
   Video: "#7CA1FF",
   Audio: "#FF7DA0",
   Image: "#9878DD"
+}
+interface TypeListItem extends IUploadedDataItem {
+  url: string,
+  currentFileDetails: IUploadedDataItem[],
+  setCurrentFileDetails: React.Dispatch<React.SetStateAction<IUploadedDataItem[]>>,
+  setOpenListItemMenu: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ListItem = ({
@@ -47,7 +53,7 @@ const ListItem = ({
   path,
   setOpenListItemMenu,
   currentFileDetails
-}: IUploadedDataItem) => {
+}: TypeListItem) => {
   const location = useLocation().pathname
   const userId = useAppSelector(state => state.management.user?.userId)
   const fileTypeName = fileType?.split('/')[1]
@@ -55,7 +61,8 @@ const ListItem = ({
   const currentItem = {name, timestamp, fileSize, fileTypeName, path, url, favorites, fileTypeCategory}
   const formattedDate = formatDate(timestamp)
   const [clicked, setClicked] = useState(false)
-  const fileFolder = getFileFolder({path, name, userId})
+  const fileFolder = path !== undefined ? getFileFolder({ path, name, userId }) : null;
+
 
   useEffect(() => {
     if (setCurrentFileDetails) {
@@ -88,7 +95,7 @@ const ListItem = ({
             null
             }
             
-            <div style={{backgroundColor: colorByFileType[fileTypeCategory]}}
+            <div style={{ backgroundColor: colorByFileType[fileTypeCategory || "defaultColor"]}}
             className="text-white rounded-2xl w-16 h-10 flex justify-center items-center font-semibold">
               {fileTypeName !== undefined && fileTypeName?.length > 5 ? fileTypeName?.slice(0,5).toUpperCase() : fileTypeName?.toUpperCase()}
              </div>

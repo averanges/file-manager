@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { useAppDispatch } from '../../store/store/storeHooks'
+import { useAppDispatch, useAppSelector } from '../../store/store/storeHooks'
 import { useSelector } from 'react-redux'
 import { handleOpenFullImage } from '../../store/slices/uiSlices'
 import { DeleteSVG } from '../../ui/svg/svg'
 
 const ImageModalWindow = () => {
     const dispatch = useAppDispatch()
-    const openFullImage = useSelector(state => state.ui.openFullImage)
+    const openFullImage = useAppSelector(state => state.ui.openFullImage)
   return (
     <div className={`${openFullImage.isOpenFullImage ? " opacity-100 z-10" : " opacity-0 -z-10"} bg-[rgba(0,0,0,0.5)]
     w-full h-full absolute justify-center items-center flex`}>

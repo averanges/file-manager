@@ -1,11 +1,11 @@
 import {Dispatch, SetStateAction} from "react"
-import { auth, database, storage } from '../config/firebaseConfig'; 
+import { auth, storage } from '../config/firebaseConfig'; 
 import { ref, getDownloadURL, uploadBytesResumable, listAll, StorageReference, 
          ListResult, uploadBytes, deleteObject, getMetadata, updateMetadata } from 'firebase/storage';
-import { EmailAuthProvider, User, onAuthStateChanged, reauthenticateWithCredential, sendEmailVerification, updateEmail, updatePassword, updateProfile, verifyBeforeUpdateEmail } from "firebase/auth";
+import { EmailAuthProvider, User, onAuthStateChanged, reauthenticateWithCredential, updatePassword, updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { handleUploadCompletion, handleUploadStart } from "../store/slices/uiSlices";
-import { handleNewFileUploaded, setUser } from "../store/slices/managementSlice";
+import { handleNewFileUploaded } from "../store/slices/managementSlice";
 
 
 
@@ -126,7 +126,7 @@ export const useFileChange = (): IUseFileChange => {
           const currentItemPromises = folderResults.items.map(async (item) => {
             const downloadURL: string = await getDownloadURL(item)
 
-            const metadata: { size: number; timeCreated: string; contentType?: string | undefined } = await getMetadata(item);
+            const metadata: { size: number; timeCreated: string; contentType?: string | undefined, customMetadata?: any } = await getMetadata(item);
       
             return {
               name: metadata?.customMetadata?.fileName,
@@ -234,7 +234,7 @@ export const deleteItems = async ({itemName, setSuccess}: IDeleteFolder) => {
     console.log(error)
   }
 }
-export const addToFavorite = async (itemName, isFavorite) => {
+export const addToFavorite = async (itemName: string, isFavorite: boolean) => {
   try {
     const itemRef: StorageReference = ref(storage, itemName)
     const itemRefData = await getMetadata(itemRef)
@@ -247,7 +247,7 @@ export const addToFavorite = async (itemName, isFavorite) => {
     console.log(error)
   }
 }
-export const renameFile = async (filePath, newName) => {
+export const renameFile = async (filePath: string, newName: string) => {
   try {
     const fileRef: StorageReference = ref(storage, filePath)
     const metadata = await getMetadata(fileRef)
@@ -256,7 +256,7 @@ export const renameFile = async (filePath, newName) => {
     console.log(error)
   }
 }
-export const moveOrCopyFile = async ({oldFilePath, id, name, type, setFinish}) => {
+export const moveOrCopyFile = async ({oldFilePath, id, name, type, setFinish}: {oldFilePath: string, id: string, name: string, type: string, setFinish: any}) => {
   const currentUser = await getCurrentUser()
   const baseRef = "uploads/users/" + currentUser?.uid + "/"
   const newFilePath = baseRef + '/' + id + '/' + name
@@ -276,8 +276,8 @@ export const moveOrCopyFile = async ({oldFilePath, id, name, type, setFinish}) =
     setFinish(true)
   }
 }
-export const updateUser = async ({avatarImg, userName, email}) => {
-
+export const updateUser = async ({avatarImg, userName}: {avatarImg: string, userName: string}) => {
+  const currentUser: any = await getCurrentUser()
   try {
     if(currentUser){
       await updateProfile(currentUser, {displayName: userName, photoURL: avatarImg})
@@ -286,14 +286,14 @@ export const updateUser = async ({avatarImg, userName, email}) => {
     console.log(error)
   }
 }
-export const changePassword = async ({currentPassword, newPassword}) => {
-  const currentUser = await getCurrentUser()
+export const changePassword = async ({currentPassword, newPassword} : {currentPassword: string, newPassword: string}) => {
+  const currentUser: any = await getCurrentUser()
   try {
     const credential = EmailAuthProvider.credential(currentUser.email, currentPassword);
     await reauthenticateWithCredential(currentUser, credential)
 
     await updatePassword(currentUser, newPassword)
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating password:', error.message);
   }
 };

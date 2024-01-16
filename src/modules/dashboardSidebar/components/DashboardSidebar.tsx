@@ -10,7 +10,7 @@ import FolderMenuItem from "./FolderMenuItem"
 import { useAppDispatch } from "../../../store/store/storeHooks"
 import { handleUserSettingsModal } from "../../../store/slices/uiSlices"
 
-export const handleLogout = async (navigate) => {
+export const handleLogout = async (navigate: any) => {
   try {
     await auth.signOut().then(() => navigate('/main'))
   } catch (error) {
@@ -18,6 +18,9 @@ export const handleLogout = async (navigate) => {
   }
 }
 
+interface IFolders {
+  [key: string]: IFolders;
+}
 
 const DashboardSidebar = () => {
   const [openSubFolder, setOpenSubFolder] = useState(true)
@@ -27,8 +30,8 @@ const DashboardSidebar = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const renderFolders = (folders, parentPath = "") => {
-    return Object.keys(folders).map((folderName) =>{ 
+  const renderFolders = (folders: IFolders, parentPath = "") => {
+    return Object.keys(folders).map((folderName: string) =>{ 
       const currentSubFolders = folders[folderName]
       const currentFolderLength = Object.keys(currentSubFolders).length
 
@@ -41,7 +44,7 @@ const DashboardSidebar = () => {
     )})
   }
 
-  const toggleOpenSubFolders = (e) => {
+  const toggleOpenSubFolders = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.stopPropagation()
     setOpenSubFolder(prev => !prev);
@@ -60,7 +63,7 @@ const DashboardSidebar = () => {
                 <div className="flex items-center ml-2 relative">
                 {
                   mainFolderLength > 0 && !openSubFolder ?  
-                      (<div className='absolute -left-3 ' onClick={(e) => toggleOpenSubFolders(e)}>
+                      (<div className='absolute -left-3' onClick={(e) => toggleOpenSubFolders(e)}>
                           <RightArrowSVG/>
                       </div>)
                   : mainFolderLength > 0 && openSubFolder ?
