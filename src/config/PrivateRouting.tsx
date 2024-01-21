@@ -11,11 +11,11 @@ import LoginPage from "../pages/loginPage/components/LoginPage"
 
 export const router = createBrowserRouter([
     {
-      path: '/',
+      path: '/dashboard',
       element: <DashboardLayout children={<DashboardPage/>}/>
     },
     {
-      path: '/main',
+      path: '/',
       element: <MainPage/>
     },
     {

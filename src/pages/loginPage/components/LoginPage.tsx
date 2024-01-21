@@ -29,7 +29,7 @@ const LoginPage = () => {
             const userResponse = await signInWithEmailAndPassword(auth, existedUser.email, existedUser.psw)
             console.log(userResponse)
             if(userResponse){
-                return navigate('/')
+                return navigate('/dashboard')
             }
         } catch (error) {
             setError('Email or password doesn`t match. Please, try again')
