@@ -107,7 +107,9 @@ const MainPage = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [])
+
+  console.log(scrollPosition)
   return (
   <div className='overflow-x-hidden bg-slate-100 overscroll-y-none scroll-smooth'>
     <div className='w-screen h-screen bg-slate-100 flex justify-center items-center relative flex-col'>
@@ -347,7 +349,7 @@ const MainPage = () => {
       </div>           
     </div>
     <div className='md:w-screen md:flex hidden justify-center relative mt-20'>
-        <div style={{width: 90 - (1906 - scrollPosition * 1.01)}} 
+        <div style={{width: 90 - (2144 - scrollPosition * 1.01)}} 
         className={`h-40 absolute bottom-[13%] right-0 rounded-l-3xl shadow-lg shadow-slate-700 z-30 
         ${visibleElements.sixth ? "" : "translate-x-40"} duration-1000 delay-500 transition-transform`}>
           <img src={abstract2} alt="" className='object-cover rounded-l-3xl h-full w-full'/>
@@ -425,12 +427,12 @@ const MainPage = () => {
           <div ref={(element) => observedElementsRef.current.push(element)} id='sixth'
           className={`bg-slate-700/70 w-[95%] rounded-3xl mb-5 flex items-end relative overflow-hidden
           mt-10 origin-center duration-1000 delay-1000 ${visibleElements.sixth ? "scale-x-100" : "scale-x-0"}`}>
-            <div style={{height: 60 - (1906 - scrollPosition)}} 
+            <div style={{height: 10 - (2144 - scrollPosition - 50)}} 
             className={`w-[10%] h-20 absolute top-0 left-16 rounded-b-3xl shadow-lg shadow-slate-700 z-30 
             ${visibleElements.sixth ? "" : "-translate-y-20"} duration-1000 delay-[1500ms] transition-transform`}>
               <img src={abstract2} alt="" className='object-cover rounded-b-3xl w-full h-full'/>
             </div>
-              <div className='flex gap-2 items-center justify-around w-full mb-20'>
+              <div className='flex gap-2 items-center justify-around w-full min-h-[200px] pt-10'>
                 <div className='flex gap-5 items-center'>
                   <Link to='https://nickbel.vercel.app' className='w-28'>
                     <img src={logoNick} alt="" className='object-cover'/>
