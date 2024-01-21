@@ -36,7 +36,7 @@ const DashboardLayout: FC<IChildren> = ({children}) => {
           <DashboardSidebar/>
           <div className="border-slate-900 sm:border-8 w-full lg:w-[83%] rounded-xl relative">
               <DashboardHeader/>
-              <div className="h-full flex justify-center bg-slate-50">
+              <div className="h-full flex justify-center bg-slate-900 w-full">
                 {isDataLoading || isFoldersLoading ? <LoadingSpinner/> : children}
                 <AudioPlayerComponent/>
               </div>

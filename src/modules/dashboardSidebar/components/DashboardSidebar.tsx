@@ -12,7 +12,7 @@ import { handleUserSettingsModal } from "../../../store/slices/uiSlices"
 
 export const handleLogout = async (navigate: any) => {
   try {
-    await auth.signOut().then(() => navigate('/main'))
+    await auth.signOut().then(() => navigate('/'))
   } catch (error) {
     console.log(error)
   }
