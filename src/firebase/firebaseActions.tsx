@@ -88,8 +88,16 @@ export const useFileChange = (): IUseFileChange => {
   return { uploadNewFile }
 }
 
-
-  export const fetchUploadedData = async (): Promise<IUploadedDataItem[]> => {
+interface IUploadedDataReturn {
+  itemsData: IUploadedDataItem[],
+  user: {
+    userId: string | undefined,
+    userName?: string,
+    email?: string  | undefined,
+    avatartImg?: string  | undefined
+  }
+}
+  export const fetchUploadedData = async (): Promise<IUploadedDataReturn> => {
     const currentUser = await getCurrentUser()
     const storageRef: StorageReference = ref(storage, `uploads/users/${currentUser?.uid}`);
   
@@ -145,7 +153,7 @@ export const useFileChange = (): IUseFileChange => {
         return Promise.all(folderItemsPromises).then((resultArray) => {
           return resultArray.reduce((acc, arr) => acc.concat(arr), [])
         });
-      };
+      }
       const folderItems = await folderData(listResult)
       return {itemsData: [...mainFolderItems, ...folderItems],
          user: 

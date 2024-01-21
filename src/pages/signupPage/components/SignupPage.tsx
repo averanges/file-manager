@@ -17,7 +17,8 @@ export interface INewUserFocusOrBlur {
     confirmPsw: boolean
 }
 
-export const validateForm = ({ name, value, setValidationErrors, inputedPsw }: {name: string, value: string}) => {
+export const validateForm = ({ name, value, setValidationErrors, inputedPsw }: {name: string, value: string, 
+  setValidationErrors: React.Dispatch<React.SetStateAction<INewUser>>, inputedPsw: string}) => {
   if (name === "email") {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const isValidEmail = emailRegex.test(value);

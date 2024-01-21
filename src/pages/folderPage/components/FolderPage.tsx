@@ -1,13 +1,6 @@
-import { Link, useMatch, useNavigate, useParams } from "react-router-dom"
-import { useState } from 'react'
-import FileItem from "../../../components/cards/FileItem"
-import { useSelector } from "react-redux"
-import { useFileChange } from "../../../firebase/firebaseActions"
-import { RootState } from "../../../store/store/store"
-import { useAppDispatch, useAppSelector } from "../../../store/store/storeHooks"
-import { handleOpenModal } from "../../../store/slices/uiSlices"
+import { useParams } from "react-router-dom"
+import {  useAppSelector } from "../../../store/store/storeHooks"
 import DataListTemplate from "../../../modules/dataListTemplate/components/DataListTemplate"
-import { FolderOpenSvg, FolderSVG } from "../../../ui/svg/svg"
 import FolderItem from "../../../components/cards/FolderItem"
 
   export const generateFolderLinks = ({folders, path, type, setCurrentFileDetails, setOpenListItemMenu, setCurrentId}) => {

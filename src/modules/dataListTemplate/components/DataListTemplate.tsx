@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import ListItem, { fileSizeToBytes, formatDate } from "../../../components/cards/ListItem"
 import { useAppDispatch, useAppSelector } from "../../../store/store/storeHooks"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { addToFavorite } from "../../../firebase/firebaseActions"
+import { IUploadedDataItem, addToFavorite } from "../../../firebase/firebaseActions"
 import { DeleteSVG, DownloadSVG, DuplicateSvg, FolderSVG, GlassSvg, PauseSVG, PlaySVG, PreviewSVG, RenameSvg, StarSvg } from "../../../ui/svg/svg"
 import { saveAs } from 'file-saver'
 import { handleAuidoPlayer, handleDeleteConfirm, handleMoveAndCopy, handleMusicActive, handleOpenFullImage, handleRenameAction } from "../../../store/slices/uiSlices"
@@ -10,19 +10,30 @@ import { generateFolderLinks } from "../../../pages/folderPage/components/Folder
 import { handleSubFolderData } from "../../../components/cards/FolderCard"
 import ImageLoader from "../../../pages/categoryPage/components/ImageLoader"
 
+
+export interface ICurrentItem {
+  name: string,
+  timestamp: string,
+  fileSize: number,
+  fileTypeName: string,
+  path: string, 
+  url: string, 
+  favorites: boolean, 
+  fileTypeCategory: string
+}
+
 interface IDatalListTeplate  {
   folderAddress?: string,
   folderLinks?: object[],
-  currentFolderData: object[]
+  currentFolderData: IUploadedDataItem[]
 }
-
 const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate) => {
     const { id } = useParams()
     const location = useLocation().pathname
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const [currentFileDetails, setCurrentFileDetails] = useState([])
+    const [currentFileDetails, setCurrentFileDetails] = useState<ICurrentItem[]>([])
     const [openListItemMenu, setOpenListItemMenu] = useState(false)
 
     const musicActive = useAppSelector(state => state.ui.musicActive)
@@ -95,7 +106,7 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
         addToFavorite(currentFileDetails[0].path, currentFileDetails[0]?.favorites)
       }
 
-      const openFullImage = (url) => {
+      const openFullImage = (url: string) => {
         dispatch(handleOpenFullImage({isOpenFullImage: true, openFullImageSource: url}))
       }
       const toggleCloseTab = () => {

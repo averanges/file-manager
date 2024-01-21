@@ -3,6 +3,7 @@ import { IUploadedDataItem } from '../../firebase/firebaseActions'
 import { useAppSelector } from '../../store/store/storeHooks'
 import { CalendarSVG, DotsSVG, FolderSVG } from '../../ui/svg/svg'
 import { useLocation } from 'react-router-dom'
+import { ICurrentItem } from '../../modules/dataListTemplate/components/DataListTemplate'
 
 export const fileSizeToBytes = (fileSize: number) => {
   return fileSize === 0 ?  "< 1 KB" : fileSize < 1 ? (fileSize * 1024).toFixed(0) + "KB" : Number(fileSize).toFixed(0) + "MB"
@@ -37,8 +38,8 @@ const colorByFileType: {[key: string]: string} = {
 }
 interface TypeListItem extends IUploadedDataItem {
   url: string,
-  currentFileDetails: IUploadedDataItem[],
-  setCurrentFileDetails: React.Dispatch<React.SetStateAction<IUploadedDataItem[]>>,
+  currentFileDetails: ICurrentItem[],
+  setCurrentFileDetails: React.Dispatch<React.SetStateAction<ICurrentItem[]>>,
   setOpenListItemMenu: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -58,6 +59,7 @@ const ListItem = ({
   const userId = useAppSelector(state => state.management.user?.userId)
   const fileTypeName = fileType?.split('/')[1]
   const fileTypeCategory = fileType && fileType?.split('/')[0].charAt(0).toUpperCase() + fileType?.split('/')[0].slice(1)
+
   const currentItem = {name, timestamp, fileSize, fileTypeName, path, url, favorites, fileTypeCategory}
   const formattedDate = formatDate(timestamp)
   const [clicked, setClicked] = useState(false)
