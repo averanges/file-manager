@@ -1,6 +1,6 @@
 import { useState} from 'react'
 import { useSelector } from 'react-redux'
-import { useAppDispatch } from '../../store/store/storeHooks'
+import { useAppDispatch, useAppSelector } from '../../store/store/storeHooks'
 import { handleAuidoPlayer, handleMusicActive } from '../../store/slices/uiSlices'
 import MusicControl from './MusicControl'
 import { secondsIntoMinutes } from '../../helpers/secondsInotMinutes'
@@ -12,16 +12,16 @@ const AudioPlayerComponent = () => {
     const trackData = useSelector((state: RootState) => state.ui.musicActive);
     const [duration, setDuration] = useState(0);
     const [timePassed, setTimePassed] = useState(0);
-    const url = trackData?.trackData?.url;
+
     const [volume, setVolume] = useState(50);
-    const [scrollToTime, setScrollToTime] = useState(null);
+    const [scrollToTime, setScrollToTime] = useState<number | null>(null);
   
     const getDuration = ({ totalDuration }: {totalDuration: number}) => {
       setDuration(totalDuration)
     }
-    const getTimePassed = ({ progressValue }) => setTimePassed(progressValue);
+    const getTimePassed = ({ progressValue } : {progressValue: number}) => setTimePassed(progressValue);
   
-    const volumeControl = (e) => setVolume(e.target.value);
+    const volumeControl = (e: React.ChangeEvent<HTMLInputElement>) => setVolume(Number(e.target.value));
   
     const toggleAudioPlay = () => {
       dispatch(handleMusicActive({ ...trackData, isActive: true }));
@@ -31,26 +31,25 @@ const AudioPlayerComponent = () => {
       dispatch(handleMusicActive({ ...trackData, isActive: false }));
     };
   
-    const audioPlayerOpen = useSelector(state => state.ui.audioPlayerOpen);
+    const audioPlayerOpen = useAppSelector(state => state.ui.audioPlayerOpen);
     const [mute, setMute] = useState(false);
-    const size = 8;
   
     const closePlayer = () => {
       dispatch(handleMusicActive({ ...trackData, isActive: false }));
       dispatch(handleAuidoPlayer(false));
     };
   
-    const handleScrollAudio = (e) => {
+    const handleScrollAudio = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
-      setTimePassed(value);
-      setScrollToTime(value);
+      setTimePassed((Number(value)));
+      setScrollToTime(Number(value));
     };
   
   return (
     <>
       <div className={`duration-ha500 shadow-2xl h-20 w-full border-t-[1px] border-slate-200 flex justify-around items-center
        bg-white absolute -bottom-2 left-0 ${audioPlayerOpen ? "" : 'translate-y-[150%] hidden'} `}>
-        <MusicControl getDuration={getDuration} mute={mute} volume={volume} getTimePassed={getTimePassed} scrollToTime={scrollToTime}/>
+        <MusicControl getDuration={getDuration} mute={mute} volume={volume} getTimePassed={getTimePassed} scrollToTime={scrollToTime || 0}/>
         <div>
           <p className='text-xl'>{trackData?.trackData?.name}</p>
         </div>

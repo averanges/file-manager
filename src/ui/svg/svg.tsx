@@ -167,11 +167,11 @@ export const DeleteSVG = ({size} : {size: number}) => {
 }
 interface IPlaySvg {
     size : number,
-    playMusicButton: () => void
+    playMusicButton?: () => void
 }
 interface IPauseSvg {
     size : number,
-    pauseMusicButton: () => void
+    pauseMusicButton?: () => void
 }
 export const PauseSVG= ({size, pauseMusicButton}: IPauseSvg) => {
     return (

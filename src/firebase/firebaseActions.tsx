@@ -11,7 +11,7 @@ import { handleNewFileUploaded } from "../store/slices/managementSlice";
 
 export interface IUploadedDataItem {
   name: string,
-  downloadURL: string,
+  downloadURL?: string,
   path?: string,
   fileType: string | undefined,
   fileSize: number,

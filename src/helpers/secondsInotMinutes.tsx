@@ -1,4 +1,4 @@
-export const secondsIntoMinutes = (seconds) => {
+export const secondsIntoMinutes = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
     const secondsRemainining = Math.floor(seconds % 60)
     const minuteFormat = minutes < 10 ? "0" + minutes : minutes.toString()

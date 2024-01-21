@@ -5,7 +5,7 @@ import avatar from '../../assets/avatar.png'
 import { useDispatch } from 'react-redux'
 import { handleUserSettingsModal } from '../../store/slices/uiSlices'
 import { changePassword, updateUser } from '../../firebase/firebaseActions'
-import { validateForm } from '../../pages/signupPage/components/SignupPage'
+import { INewUser, validateForm } from '../../pages/signupPage/components/SignupPage'
 
 const UserSettings = () => {
     const dispatch = useDispatch()
@@ -17,7 +17,7 @@ const UserSettings = () => {
         psw: '',
         confirmPsw: ''
     })
-    const [validationErrors, setValidationErrors] = useState({
+    const [validationErrors, setValidationErrors] = useState<INewUser>({
         psw: '',
         confirmPsw: ''
     })
@@ -28,9 +28,8 @@ const UserSettings = () => {
         userName: userName
     })
 
-    console.log(validationErrors)
-    console.log(passwords)
-    const updateUserProfile = (e) => {
+
+    const updateUserProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name} = e.target
         setUserBasicData(prev => {
             return {...prev, [name]: value}
@@ -47,7 +46,7 @@ const UserSettings = () => {
             }
         }
     }
-    const toggleChangePsw = (e) => {
+    const toggleChangePsw = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value, name} = e.target
         validateForm({value, name, setValidationErrors, inputedPsw: passwords.psw})
         setPasswords(prev => {

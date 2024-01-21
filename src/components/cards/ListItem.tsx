@@ -37,9 +37,9 @@ const colorByFileType: {[key: string]: string} = {
   Image: "#9878DD"
 }
 interface TypeListItem extends IUploadedDataItem {
-  url: string,
-  currentFileDetails: ICurrentItem[],
-  setCurrentFileDetails: React.Dispatch<React.SetStateAction<ICurrentItem[]>>,
+  url?: string,
+  currentFileDetails?: ICurrentItem[],
+  setCurrentFileDetails?: React.Dispatch<React.SetStateAction<ICurrentItem[]>>,
   setOpenListItemMenu: React.Dispatch<React.SetStateAction<boolean>>
 }
 

@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IUploadedDataItem } from "../../firebase/firebaseActions";
 
 interface IFileTypedData {
+  [key: string]: IUploadedDataItem[];
   images: IUploadedDataItem[];
   audio: IUploadedDataItem[];
   video: IUploadedDataItem[];
@@ -31,7 +32,8 @@ interface IManagementState {
   user: {
     userName: string,
     avatarImg: string,
-    userId: string
+    userId: string,
+    email: string
   },
   foldersList: IUploadedDataItem[],
   actionSuccess: boolean
@@ -62,7 +64,8 @@ const initialState: IManagementState = {
   user: {
     avatarImg: '',
     userName: '',
-    userId: ''
+    userId: '',
+    email: ''
 
   },
   foldersList: [],

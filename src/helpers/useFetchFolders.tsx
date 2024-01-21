@@ -2,8 +2,6 @@ import { useEffect } from "react"
 import { fetchAllFolders } from "../firebase/firebaseActions"
 import { handleActionSuccess, handleAllFolders, handleFoldersLoading, handleNewFolderAdded } from "../store/slices/managementSlice"
 import { useAppDispatch, useAppSelector } from "../store/store/storeHooks"
-import { useSelector } from "react-redux"
-import { RootState } from "../store/store/store"
 
 const useFetchFolders = () => {
     const actionSuccess = useAppSelector(state => state.management.actionSuccess)

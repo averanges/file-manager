@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react'
 import { IUploadedDataItem } from '../../../firebase/firebaseActions'
 import { handleOpenFullImage } from '../../../store/slices/uiSlices'
 import { useAppDispatch } from '../../../store/store/storeHooks'
+import { ICurrentItem } from '../../../modules/dataListTemplate/components/DataListTemplate'
+
+interface IImageItemProps extends IUploadedDataItem{
+  url: string,
+  setCurrentFileDetails: React.Dispatch<React.SetStateAction<ICurrentItem[]>>,
+  setOpenListItemMenu: React.Dispatch<React.SetStateAction<boolean>>,
+  currentFileDetails: ICurrentItem[]
+}
 
 const ImageItem = ({
     name,
@@ -14,12 +22,12 @@ const ImageItem = ({
     path,
     setOpenListItemMenu,
     currentFileDetails
-  }: IUploadedDataItem) => {
+  }: IImageItemProps) => {
     const dispatch = useAppDispatch()
     const [clicked, setClicked] = useState(false)   
     const [loaded, setLoaded] = useState(false)
 
-    const fileTypeName = fileType?.split('/')[1]
+    const fileTypeName = fileType?.split('/')[1] || ''
     const fileTypeCategory = fileType && fileType?.split('/')[0].charAt(0).toUpperCase() + fileType?.split('/')[0].slice(1)
     const currentItem = {name, timestamp, fileSize, fileTypeName, path, url, favorites, fileTypeCategory}
 

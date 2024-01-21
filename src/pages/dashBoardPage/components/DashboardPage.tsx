@@ -1,4 +1,4 @@
-import {useState, FC, Dispatch, SetStateAction, useEffect} from "react"
+import {useState, useEffect} from "react"
 import CategoryCard from "../../../components/cards/CategoryCard"
 import FolderCard from "../../../components/cards/FolderCard"
 import { Doughnut } from "react-chartjs-2"
@@ -17,12 +17,8 @@ import MobileDashboardPage from "./MobileDashboardPage";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-interface ICloudPageProps {
-    setOpenModalWindow: Dispatch<SetStateAction<boolean>>,
-    newFolderSuccess: boolean
-}
 
-const DashboardPage: FC<ICloudPageProps> = () => {
+const DashboardPage = () => {
 const dispatch = useAppDispatch()
 const uploadedData = useSelector((state:RootState) => state.management.allData)
 const foldersData = useAppSelector(state => state.management.foldersList)

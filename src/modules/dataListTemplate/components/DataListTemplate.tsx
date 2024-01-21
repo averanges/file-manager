@@ -65,7 +65,7 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
         <ListItem key={idx} 
           setCurrentFileDetails={setCurrentFileDetails} path={el.path}
           setOpenListItemMenu={setOpenListItemMenu} currentFileDetails={currentFileDetails}
-          name={el.name} url={el.downloadURL} fileSize={el.fileSize} c
+          name={el.name} url={el.downloadURL} fileSize={el.fileSize}
           fileType={el.fileType} timestamp={el.timestamp} favorites={el.favorites}
         />)
         
@@ -82,14 +82,14 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
 
       const manipulateItems = currentFileDetails.length ? currentFileDetails : null
       const toggleDeleteItem = () => {
-        dispatch(handleDeleteConfirm({open: true, path: manipulateItems}))
+        manipulateItems !== null ? dispatch(handleDeleteConfirm({open: true, path: manipulateItems})) : null 
       }
       
       const activeTrack = musicActive.trackData.name === currentFileDetails[0]?.name
 
       const playAudio = () => {
         dispatch(handleAuidoPlayer(true))
-        dispatch(handleMusicActive({ trackData: currentFileDetails[0], isActive: true }));
+        dispatch(handleMusicActive({ trackData: currentFileDetails[0], isActive: true }))
       }
     
       const pauseAudio = () => {
@@ -174,7 +174,7 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
                       <RenameSvg size={6}/>
                     </div>
                     { location.split('/').includes('folder') ?
-                      (<div onClick={() => dispatch(handleMoveAndCopy({open: true, path: currentFileDetails[0].path, name: currentFileDetails[0].name, id}))}>
+                      (<div onClick={() => dispatch(handleMoveAndCopy({open: true, path: currentFileDetails[0].path, name: currentFileDetails[0].name, id: id || ''}))}>
                         <DuplicateSvg size={6} />
                       </div>)
                       :
@@ -263,7 +263,9 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
                     !currentFileDetails.length
                       ? fileSizeToBytes(currentFolderData.map((el) => el?.fileSize).reduce((acc, fileSize) => acc + fileSize, 0))
                       : subFolderData ?
-                      fileSizeToBytes(subFolderData.map((el) => el?.fileSize).reduce((acc, fileSize) => acc + fileSize, 0))
+                      fileSizeToBytes(subFolderData
+                        .map((el: ICurrentItem) => el?.fileSize)
+                        .reduce((acc: number, fileSize: number) => acc + fileSize, 0))
                       : currentFileDetails.length === 1 && !subFolderData 
                         ? fileSizeToBytes(currentFileDetails[0]?.fileSize)
                         : fileSizeToBytes(currentFileDetails.map((el) => el?.fileSize).reduce((acc, fileSize) => acc + fileSize, 0))

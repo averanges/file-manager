@@ -1,25 +1,52 @@
-import { useRef, useEffect } from 'react'
-import ReactPlayer from 'react-player'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useRef } from 'react';
+import ReactPlayer from 'react-player';
+import { useAppSelector } from '../../store/store/storeHooks';
 
-const MusicControl = ({getDuration, volume, mute, getTimePassed, scrollToTime}) => {
-    const trackData = useSelector(state => state.ui.musicActive)
-    const url = trackData?.trackData?.url;
-    const isPlaying = trackData?.isActive
-    const audioRef = useRef(null)
-    const totalDuration = audioRef?.current?.getDuration()
-
-    const onProgressControl = (progressValue) => {
-      getDuration({totalDuration})
-      getTimePassed({progressValue})}
-
-    useEffect (() => {
-        audioRef.current.seekTo(scrollToTime)
-    }, [scrollToTime])
-  return (
-    <ReactPlayer style={{display: "none"}} playing={isPlaying} volume={volume/100} muted={mute} 
-     url={url} ref={audioRef} controls onProgress={(progress) => onProgressControl(progress.playedSeconds)}>MusicControl</ReactPlayer>
-  )
+interface MusicControlProps {
+  getDuration: (data: { totalDuration: number }) => void;
+  volume: number;
+  mute: boolean;
+  getTimePassed: (data: { progressValue: number }) => void;
+  scrollToTime: number;
 }
 
-export default MusicControl 
+const MusicControl: React.FC<MusicControlProps> = ({
+  getDuration,
+  volume,
+  mute,
+  getTimePassed,
+  scrollToTime
+}) => {
+  const trackData = useAppSelector(state => state.ui.musicActive);
+  const url = trackData?.trackData?.url;
+  const isPlaying = trackData?.isActive;
+  const audioRef = useRef<ReactPlayer | null>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.seekTo(scrollToTime);
+    }
+  }, [scrollToTime]);
+
+  const onProgressControl = (progressValue: number) => {
+    getDuration({ totalDuration: audioRef.current?.getDuration() || 0 });
+    getTimePassed({ progressValue });
+  };
+
+  return (
+    <ReactPlayer
+      style={{ display: "none" }}
+      playing={isPlaying}
+      volume={volume / 100}
+      muted={mute}
+      url={url}
+      ref={audioRef}
+      controls
+      onProgress={(progress) => onProgressControl(progress.playedSeconds)}
+    >
+      MusicControl
+    </ReactPlayer>
+  );
+};
+
+export default MusicControl;

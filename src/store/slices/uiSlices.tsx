@@ -1,9 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { IFileItem } from "../../components/cards/FileItem"
+import { ICurrentItem } from "../../modules/dataListTemplate/components/DataListTemplate"
 
 interface IActiveObj {
     isActive: boolean,
     trackData : IFileItem 
+}
+interface IOpenFullImg {
+    isOpenFullImage: boolean,
+    openFullImageSource: string
+}
+interface IDeleteConfirmItem {
+    name: string,
+    path: string
 }
 interface IUiState {
     openModal: {
@@ -12,7 +21,7 @@ interface IUiState {
     },
     deleteConfirm: {
         open: boolean,
-        path: string[]
+        path: IDeleteConfirmItem[]
     },
     renameModal: {
         open: boolean,
@@ -39,7 +48,6 @@ interface IUiState {
         openFullImageSource: string
     }
 }
-
 const initialState: IUiState = {
     openModal: {
         open: false,
@@ -65,9 +73,12 @@ const initialState: IUiState = {
         subTabType: ''
     },
     audioPlayerOpen: false,
-    musicActive: {isActive: false, trackData: {
-        name: '',
-    }},
+    musicActive: {
+        isActive: false,
+         trackData: {
+            name: '',
+        }
+    },
     musicStart: false,
     uploadPercentComplete: 0,
     uploadStart: false,
@@ -84,7 +95,7 @@ const uiSlice = createSlice({
         handleOpenModal : (state, action: PayloadAction<{ open: boolean; id: string }>) => {
             state.openModal = action.payload
         },
-        handleDeleteConfirm : (state, action: PayloadAction<{ open: boolean; path: string[] }>) => {
+        handleDeleteConfirm : (state, action: PayloadAction<{ open: boolean; path: IDeleteConfirmItem[] }>) => {
             state.deleteConfirm = action.payload
         },
         handleMoveAndCopy : (state, action: PayloadAction<{ open: boolean; path: string, name: string, id: string }>) => {
@@ -97,7 +108,7 @@ const uiSlice = createSlice({
         handleAuidoPlayer : (state, action: PayloadAction<boolean>) => {
             state.audioPlayerOpen = action.payload
         },
-        handleMusicActive : (state, action: PayloadAction<object>) => {
+        handleMusicActive : (state, action: PayloadAction<IActiveObj>) => {
             state.musicActive = action.payload
         },
         handleUserSettingsModal : (state, action: PayloadAction<{open: boolean, subTabType: string}>) => {
@@ -112,7 +123,7 @@ const uiSlice = createSlice({
         handleUploadStart : (state, action: PayloadAction<boolean>) => {
             state.uploadStart = action.payload
         },
-        handleOpenFullImage : (state, action: PayloadAction<boolean>) => {
+        handleOpenFullImage : (state, action: PayloadAction<IOpenFullImg>) => {
             state.openFullImage = {...action.payload}
         },
 

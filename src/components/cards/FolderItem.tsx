@@ -2,8 +2,13 @@ import { useState, useEffect } from 'react'
 import { FolderArrowDownSvg, FolderOpenSvg, FolderSVG } from '../../ui/svg/svg'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../store/store/storeHooks'
+import { IGenerateFolderLinks } from '../../pages/folderPage/components/FolderPage'
 
-const FolderItem = ({encodedPath, name, type, setCurrentFileDetails, setOpenListItemMenu, setCurrentId}: {encodedPath: string, name: string}) => {
+interface IFolderItem extends IGenerateFolderLinks {
+  encodedPath: string, 
+  name: string
+}
+const FolderItem = ({encodedPath, name, type, setCurrentFileDetails, setOpenListItemMenu, setCurrentId}: IFolderItem) => {
     const navigate = useNavigate()
     const [clicked, setClicked] = useState(false)
     const foldersData = useAppSelector(state => state.management.foldersList)

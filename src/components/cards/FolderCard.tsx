@@ -3,6 +3,7 @@ import { DeleteSVG, DotsSVG, FolderSVG, OpenSVG } from "../../ui/svg/svg"
 import { Link } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../store/store/storeHooks"
 import { handleDeleteConfirm } from "../../store/slices/uiSlices"
+import { IUploadedDataItem } from "../../firebase/firebaseActions"
 
 interface FolderProps {
   name: string,
@@ -13,14 +14,16 @@ interface FolderProps {
 }
 
 
-export const handleSubFolderData = ({data, name}) => {
+export const handleSubFolderData = ({data, name} : {data: IUploadedDataItem[], name: string}) => {
   return data.filter(el => {
-    const folderName = el.path.split('/')
-    return folderName[folderName.length - 2] === name
+    if (el.path !== undefined) {
+      const folderName = el.path.split('/')
+      return folderName[folderName.length - 2] === name
+    }
   }) 
 }
 
-const FolderCard: FC<FolderProps> = ({name, color, setDeleteSuccess, deleteSuccess, folderPath}) => {
+const FolderCard: FC<FolderProps> = ({name, color, folderPath}) => {
   const dispatch = useAppDispatch()
   const folderPathName = folderPath.split('/').slice(3).filter(el => el !== "folders").join('/')
 

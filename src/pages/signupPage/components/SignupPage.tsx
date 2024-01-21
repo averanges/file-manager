@@ -5,8 +5,8 @@ import { auth } from "../../../config/firebaseConfig"
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth"
 
 export interface INewUser {
-    name: string,
-    email: string,
+    name?: string,
+    email?: string,
     psw: string,
     confirmPsw: string
 }
@@ -103,7 +103,7 @@ const SignupPage = () => {
             return;
         }
         try {
-          const userCreated = await createUserWithEmailAndPassword(auth, newUser.email, newUser.psw)
+          const userCreated = await createUserWithEmailAndPassword(auth, newUser.email || "", newUser.psw)
             if (userCreated) {
                 const currentUser = auth.currentUser;
                 if (currentUser) {

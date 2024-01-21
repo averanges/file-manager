@@ -1,15 +1,23 @@
 import { useParams } from "react-router-dom"
 import {  useAppSelector } from "../../../store/store/storeHooks"
-import DataListTemplate from "../../../modules/dataListTemplate/components/DataListTemplate"
+import DataListTemplate, { ICurrentItem } from "../../../modules/dataListTemplate/components/DataListTemplate"
 import FolderItem from "../../../components/cards/FolderItem"
 
-  export const generateFolderLinks = ({folders, path, type, setCurrentFileDetails, setOpenListItemMenu, setCurrentId}) => {
+export interface IGenerateFolderLinks {
+  folders?: object,
+  path?: string,
+  type: string,
+  setCurrentFileDetails: React.Dispatch<React.SetStateAction<ICurrentItem[]>>,
+  setOpenListItemMenu: React.Dispatch<React.SetStateAction<boolean>>,
+  setCurrentId?: React.Dispatch<React.SetStateAction<string>>
+}
+  export const generateFolderLinks = ({folders, path, type, setCurrentFileDetails, setOpenListItemMenu, setCurrentId}: IGenerateFolderLinks) => {
     if (!folders || !path || typeof path !== 'string') {
       return null;
     }
   
     const partedPath = path.split('/').filter(el => el !== 'My Files')
-    const folderPathTrack = (foldersPath, slicedPath) => {
+    const folderPathTrack = (foldersPath: any, slicedPath: string[]) => {
       if (path === 'My Files') {
         return folders;
       }
@@ -59,8 +67,10 @@ const FolderPage = () => {
   // const dispatch = useAppDispatch()
   return (
     <div className=' w-full h-full flex justify-center'>
+      {currentFolderData !== null ?
       <DataListTemplate folderAddress={currentFolder}
       currentFolderData={currentFolderData}/>
+    : null}
     </div>
   )
 }
