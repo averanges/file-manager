@@ -29,7 +29,7 @@ const ImageItem = ({
 
     const fileTypeName = fileType?.split('/')[1] || ''
     const fileTypeCategory = fileType && fileType?.split('/')[0].charAt(0).toUpperCase() + fileType?.split('/')[0].slice(1)
-    const currentItem = {name, timestamp, fileSize, fileTypeName, path, url, favorites, fileTypeCategory}
+    const currentItem = {name, timestamp, fileSize, fileTypeName, path: path || '', url, favorites: favorites || false, fileTypeCategory: fileTypeCategory || ''}
 
     useEffect(() => {
         if (setCurrentFileDetails) {

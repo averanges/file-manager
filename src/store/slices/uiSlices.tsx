@@ -99,7 +99,6 @@ const uiSlice = createSlice({
             state.deleteConfirm = action.payload
         },
         handleMoveAndCopy : (state, action: PayloadAction<{ open: boolean; path: string, name: string, id: string }>) => {
-            console.log(action.payload)
             state.moveAndCopyModal = action.payload
         },
         handleRenameAction: (state, action: PayloadAction<{ open: boolean; path: string, name: string }>) => {

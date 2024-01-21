@@ -3,6 +3,7 @@ import { FolderArrowDownSvg, FolderOpenSvg, FolderSVG } from '../../ui/svg/svg'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../store/store/storeHooks'
 import { IGenerateFolderLinks } from '../../pages/folderPage/components/FolderPage'
+import { ICurrentItem } from '../../modules/dataListTemplate/components/DataListTemplate'
 
 interface IFolderItem extends IGenerateFolderLinks {
   encodedPath: string, 
@@ -16,16 +17,17 @@ const FolderItem = ({encodedPath, name, type, setCurrentFileDetails, setOpenList
     const currentItem = {name, path: folderItemPath?.path}
     
     useEffect(() => {
-        if (setCurrentFileDetails) {
+      if (setCurrentFileDetails) {
           if (clicked) {
-            setOpenListItemMenu(true)
-            setCurrentFileDetails(prev => [...prev, currentItem])
+              setOpenListItemMenu(true);
+              setCurrentFileDetails((prev) => [...prev, currentItem] as ICurrentItem[]);
+          } else {
+              setCurrentFileDetails((prev) => prev.filter((el) => el.name !== name) as ICurrentItem[]);
           }
-          else {
-            setCurrentFileDetails(prev => prev?.filter(el => el.name !== name))
-          }
-        }
-      }, [clicked])
+      }
+  }, [clicked])
+
+  
   return (
     <>
     {

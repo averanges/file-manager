@@ -15,10 +15,10 @@ const MoveAndCopyWindow = () => {
   const allFolders = useAppSelector(state => state.management.allFolders)
   const mappedFolderLinks = allFolders && Object.keys(allFolders).length > 0 ? generateFolderLinks({folders: allFolders, path: currentId, type: "modal", setCurrentId}) : null
   const toggleCancel = () => {
-    dispatch(handleMoveAndCopy({open: false, path: '', folderLinks: [], id: ''}))
+    dispatch(handleMoveAndCopy({open: false, path: '',name: '', id: ''}))
     }
 
-    const toggleMoveOrCopy = (type) => {
+    const toggleMoveOrCopy = (type: string) => {
         moveOrCopyFile({oldFilePath: path, id: currentId, name, type: type, setFinish})
     }
   useEffect(() => {

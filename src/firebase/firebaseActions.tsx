@@ -23,7 +23,7 @@ itemName: string[],
 setSuccess: Dispatch<SetStateAction<boolean>>
 }
 interface IDeleteFolder extends IFolder {
-  deleteSuccess: boolean
+  deleteSuccess?: boolean
 }
 export interface InputEventWithFiles extends InputEvent {
   target: HTMLInputElement & EventTarget;
@@ -89,84 +89,98 @@ export const useFileChange = (): IUseFileChange => {
 }
 
 interface IUploadedDataReturn {
-  itemsData: IUploadedDataItem[],
+  itemsData: IUploadedDataItem[];
   user: {
-    userId: string | undefined,
-    userName?: string,
-    email?: string  | undefined,
-    avatartImg?: string  | undefined
-  }
+    userId: string | undefined;
+    userName?: string;
+    email?: string | undefined;
+    avatartImg?: string | undefined;
+  };
 }
-  export const fetchUploadedData = async (): Promise<IUploadedDataReturn> => {
-    const currentUser = await getCurrentUser()
-    const storageRef: StorageReference = ref(storage, `uploads/users/${currentUser?.uid}`);
-  
-    try {
-      const listResult: ListResult = await listAll(storageRef);
 
-      const mainFolderItems = await Promise.all(
-        listResult.items.map(async (item) => {
-          const downloadURL = await getDownloadURL(item);
-          const metadata = await getMetadata(item);
-  
-          return {
-            name: metadata?.customMetadata?.fileName,
-            downloadURL,
-            path: item.fullPath,
-            fileType: metadata.contentType, 
-            fileSize: Number((metadata.size/ (1024 * 1024)).toFixed(3)),
-            timestamp: metadata.timeCreated,
-            favorites: metadata?.customMetadata?.favorites ? true : false
-          };
-        })
-      )
-        
-      const folderData = async (folder: ListResult): Promise<IUploadedDataItem[]> => {
-        const folderItemsPromises: Promise<IUploadedDataItem[]>[] = folder.prefixes.map(async (el) => {
-          const folderRef: StorageReference = ref(storage, el.fullPath)
-          const folderResults: ListResult = await listAll(folderRef)
+export const fetchUploadedData = async (): Promise<IUploadedDataReturn> => {
+  const currentUser = await getCurrentUser();
+  const storageRef: StorageReference = ref(
+    storage,
+    `uploads/users/${currentUser?.uid}`
+  );
+
+  try {
+    const listResult: ListResult = await listAll(storageRef);
+
+    const mainFolderItems = await Promise.all(
+      listResult.items.map(async (item) => {
+        const downloadURL = await getDownloadURL(item);
+        const metadata = await getMetadata(item);
+
+        return {
+          name: metadata?.customMetadata?.fileName!,
+          downloadURL,
+          path: item.fullPath,
+          fileType: metadata.contentType,
+          fileSize: Number((metadata.size / (1024 * 1024)).toFixed(3)),
+          timestamp: metadata.timeCreated,
+          favorites: metadata?.customMetadata?.favorites ? true : false,
+        };
+      })
+    );
+
+    const folderData = async (folder: ListResult): Promise<IUploadedDataItem[]> => {
+      const folderItemsPromises: Promise<IUploadedDataItem[]>[] = folder.prefixes.map(
+        async (el) => {
+          const folderRef: StorageReference = ref(storage, el.fullPath);
+          const folderResults: ListResult = await listAll(folderRef);
 
           let subResult: IUploadedDataItem[] = [];
           if (folderResults.prefixes) {
             subResult = await folderData(folderResults);
           }
-      
-          const currentItemPromises = folderResults.items.map(async (item) => {
-            const downloadURL: string = await getDownloadURL(item)
 
-            const metadata: { size: number; timeCreated: string; contentType?: string | undefined, customMetadata?: any } = await getMetadata(item);
-      
+          const currentItemPromises = folderResults.items.map(async (item) => {
+            const downloadURL: string = await getDownloadURL(item);
+
+            const metadata: {
+              size: number;
+              timeCreated: string;
+              contentType?: string | undefined;
+              customMetadata?: any;
+            } = await getMetadata(item);
+
             return {
-              name: metadata?.customMetadata?.fileName,
+              name: metadata?.customMetadata?.fileName!,
               downloadURL,
               path: item.fullPath,
               fileType: metadata.contentType,
               fileSize: Number((metadata.size / (1024 * 1024)).toFixed(3)),
               timestamp: metadata.timeCreated,
-              favorites: metadata?.customMetadata?.favorites ? true : false
+              favorites: metadata?.customMetadata?.favorites ? true : false,
             };
           });
-      
-          return Promise.all([...currentItemPromises, ...subResult])
-        });
-      
-        return Promise.all(folderItemsPromises).then((resultArray) => {
-          return resultArray.reduce((acc, arr) => acc.concat(arr), [])
-        });
-      }
-      const folderItems = await folderData(listResult)
-      return {itemsData: [...mainFolderItems, ...folderItems],
-         user: 
-         {userId: currentUser?.uid, 
-          userName: currentUser?.displayName, 
-          email: currentUser?.email, 
-          avatartImg: currentUser?.photoURL}}
-    } catch (error) {
-      console.error('Error fetching uploaded data:', error);
-      throw error;
-      }
-    }
-  
+
+          return Promise.all([...currentItemPromises, ...subResult]);
+        }
+      );
+
+      return Promise.all(folderItemsPromises).then((resultArray) => {
+        return resultArray.reduce((acc, arr) => acc.concat(arr), []);
+      });
+    };
+    const folderItems = await folderData(listResult);
+    return {
+      itemsData: [...mainFolderItems, ...folderItems],
+      user: {
+        userId: currentUser?.uid,
+        userName: currentUser?.displayName!,
+        email: currentUser?.email!,
+        avatartImg: currentUser?.photoURL!,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching uploaded data:', error);
+    throw error;
+  }
+};
+
   
 
 export const createNewFolder = async (itemName: string): Promise<void> => {
@@ -184,30 +198,36 @@ export const createNewFolder = async (itemName: string): Promise<void> => {
   }
 };
 
-export const fetchAllFolders = async (): Promise<string[]> => {
-  const currentUser = await getCurrentUser()
-  const baseRef = "uploads/users/" + currentUser?.uid + "/"
-  
-  const renderFolders = async (folderName: string, previousPath: string) => {
-    const folderPath = previousPath + "/" + folderName
-    const folderPathWithoutSlash = folderPath.startsWith('/') ? folderPath.slice(1) : folderPath
+interface IRenderFolder {
+  renderFolders: (folderName: string, previousPath: string) => Promise<{ [key: string]: IRenderFolder }>;
+}
+
+export const fetchAllFolders = async (): Promise<{ [key: string]: IRenderFolder }> => {
+  const currentUser = await getCurrentUser(); // Make sure to import getCurrentUser
+
+  const baseRef = "uploads/users/" + currentUser?.uid + "/";
+
+  const renderFolders = async (
+    folderName: string,
+    previousPath: string
+  ): Promise<{ [key: string]: IRenderFolder }> => {
+    const folderPath = previousPath + "/" + folderName; 
+    const folderPathWithoutSlash = folderPath.startsWith('/') ? folderPath.slice(1) : folderPath;
 
     const folderRef: StorageReference = ref(storage, baseRef + folderPathWithoutSlash + "/folders");
     const items = await listAll(folderRef);
-  
-    const foldersList = await Promise.all(
-      items.items.map(async (current) => {
-        const subFolders = await renderFolders(current.name, folderPathWithoutSlash);
-        return { [current.name]: subFolders };
-      })
-    );
-  
-    return Object.assign({}, ...foldersList);
+
+    const foldersList: Promise<{ [key: string]: IRenderFolder }> = items.items.reduce(async (acc, current) => {
+      const subFolders = await renderFolders(current.name, folderPathWithoutSlash);
+      return { ...await acc, [current.name]: subFolders };
+    }, Promise.resolve({}));
+
+    return foldersList;
   };
-  
-  const result = await renderFolders("My Files", "")
+
+  const result = await renderFolders("My Files", "");
   return result;
-}  
+}
 
 export const deleteItems = async ({itemName, setSuccess}: IDeleteFolder) => {
   try {

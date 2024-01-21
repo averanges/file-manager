@@ -1,14 +1,16 @@
 import { ReactNode, useState } from 'react'
 import { DownArrowSVG, FolderSVG, RightArrowSVG } from '../../../ui/svg/svg'
 import { Link } from 'react-router-dom'
+import { IFolders } from './DashboardSidebar'
 
 interface IFolderMenuItem {
     currentFolderLength: number, 
-    renderFolders: (currentSubFolders: object, fullPath: string) => ReactNode,
-    currentSubFolders: object,
+    renderFolders: (folders: IFolders, fullPath: string) => React.ReactNode,
+    currentSubFolders: IFolders, // Assuming IFolders is your type for the folder structure
     folderName: string,
     fullPath: string
 }
+
 const FolderMenuItem = ({currentFolderLength, renderFolders, currentSubFolders, folderName, fullPath}: IFolderMenuItem) => {
     const [openSubFolders, setOpenSubFolders] = useState(false)
     const addLeftOffset = decodeURIComponent(fullPath).split('/').filter(el => el !== '').length

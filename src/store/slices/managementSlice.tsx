@@ -11,6 +11,7 @@ interface IFileTypedData {
 }
 
 interface IFileTypedSizes {
+  [key: string]: number,
   images: number;
   audio: number;
   video: number;

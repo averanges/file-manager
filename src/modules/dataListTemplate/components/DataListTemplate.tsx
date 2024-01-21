@@ -264,7 +264,7 @@ const DataListTemplate = ({folderAddress, currentFolderData}: IDatalListTeplate)
                       ? fileSizeToBytes(currentFolderData.map((el) => el?.fileSize).reduce((acc, fileSize) => acc + fileSize, 0))
                       : subFolderData ?
                       fileSizeToBytes(subFolderData
-                        .map((el: ICurrentItem) => el?.fileSize)
+                        .map((el: IUploadedDataItem) => el?.fileSize)
                         .reduce((acc: number, fileSize: number) => acc + fileSize, 0))
                       : currentFileDetails.length === 1 && !subFolderData 
                         ? fileSizeToBytes(currentFileDetails[0]?.fileSize)

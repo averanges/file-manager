@@ -7,8 +7,8 @@ export interface IGenerateFolderLinks {
   folders?: object,
   path?: string,
   type: string,
-  setCurrentFileDetails: React.Dispatch<React.SetStateAction<ICurrentItem[]>>,
-  setOpenListItemMenu: React.Dispatch<React.SetStateAction<boolean>>,
+  setCurrentFileDetails?: React.Dispatch<React.SetStateAction<ICurrentItem[]>>,
+  setOpenListItemMenu?: React.Dispatch<React.SetStateAction<boolean>>,
   setCurrentId?: React.Dispatch<React.SetStateAction<string>>
 }
   export const generateFolderLinks = ({folders, path, type, setCurrentFileDetails, setOpenListItemMenu, setCurrentId}: IGenerateFolderLinks) => {

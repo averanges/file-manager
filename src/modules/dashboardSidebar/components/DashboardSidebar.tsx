@@ -18,7 +18,7 @@ export const handleLogout = async (navigate: any) => {
   }
 }
 
-interface IFolders {
+export interface IFolders {
   [key: string]: IFolders;
 }
 

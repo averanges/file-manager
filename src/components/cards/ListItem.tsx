@@ -68,15 +68,15 @@ const ListItem = ({
 
   useEffect(() => {
     if (setCurrentFileDetails) {
-      if (clicked) {
-        setOpenListItemMenu(true)
-        setCurrentFileDetails(prev => [...prev, currentItem])
-      }
-      else {
-        setCurrentFileDetails(prev => prev.filter(el => el.name !== name))
-      }
+        if (clicked) {
+            setOpenListItemMenu(true);
+            setCurrentFileDetails((prev) => [...prev, currentItem] as ICurrentItem[]);
+        } else {
+            setCurrentFileDetails((prev) => prev.filter((el) => el.name !== name) as ICurrentItem[]);
+        }
     }
-  }, [clicked])
+}, [clicked]);
+
 
   useEffect(() => {
     if(currentFileDetails?.length === 0) {

@@ -26,7 +26,7 @@ const CategoryCard: FunctionComponent<CategoryProps> = ({name, color}) => {
             <FolderSVG size="8"/>
           </div>
           <div className="cursor-pointer">
-            <DotsSVG/>
+            <DotsSVG />
           </div>
         </div>
         <div>
