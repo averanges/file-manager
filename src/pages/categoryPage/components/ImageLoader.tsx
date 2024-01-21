@@ -1,5 +1,4 @@
-import { SetStateAction, useState } from 'react'
-import { handleOpenFullImage } from '../../../store/slices/uiSlices'
+import { SetStateAction } from 'react'
 import ImageItem from './ImageItem'
 import { IUploadedDataItem } from '../../../firebase/firebaseActions'
 import { ICurrentItem } from '../../../modules/dataListTemplate/components/DataListTemplate'

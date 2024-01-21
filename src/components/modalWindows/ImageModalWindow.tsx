@@ -1,8 +1,5 @@
-import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/store/storeHooks'
-import { useSelector } from 'react-redux'
 import { handleOpenFullImage } from '../../store/slices/uiSlices'
-import { DeleteSVG } from '../../ui/svg/svg'
 
 const ImageModalWindow = () => {
     const dispatch = useAppDispatch()

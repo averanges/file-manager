@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FolderArrowDownSvg, FolderOpenSvg, FolderSVG } from '../../ui/svg/svg'
+import { FolderArrowDownSvg, FolderOpenSvg } from '../../ui/svg/svg'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../store/store/storeHooks'
 import { IGenerateFolderLinks } from '../../pages/folderPage/components/FolderPage'
@@ -17,9 +17,9 @@ const FolderItem = ({encodedPath, name, type, setCurrentFileDetails, setOpenList
     const currentItem = {name, path: folderItemPath?.path}
     
     useEffect(() => {
-      if (setCurrentFileDetails) {
+      if (setCurrentFileDetails && setOpenListItemMenu) {
           if (clicked) {
-              setOpenListItemMenu(true);
+              setOpenListItemMenu(true)
               setCurrentFileDetails((prev) => [...prev, currentItem] as ICurrentItem[]);
           } else {
               setCurrentFileDetails((prev) => prev.filter((el) => el.name !== name) as ICurrentItem[]);
@@ -48,7 +48,7 @@ const FolderItem = ({encodedPath, name, type, setCurrentFileDetails, setOpenList
        </div>
       </div>)
       :
-      (<div onClick={() => setCurrentId(prev => prev + "/" + name)}
+      (<div onClick={() => setCurrentId && setCurrentId(prev => prev + "/" + name)}
         style={{userSelect: "none"}}
         className='hover:bg-[rgba(255,125,160,0.5)] cursor-pointer rounded-xl active:shadow-inner'>
         <div className="flex items-center w-fit ml-2">

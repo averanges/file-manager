@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAppSelector } from '../../store/store/storeHooks'
-import { SearchSVG, UploadSvg } from '../../ui/svg/svg'
-import avatar from '../../assets/avatar.png'
+import { UploadSvg } from '../../ui/svg/svg'
 import { useDispatch } from 'react-redux'
 import { handleUserSettingsModal } from '../../store/slices/uiSlices'
 import { changePassword, updateUser } from '../../firebase/firebaseActions'

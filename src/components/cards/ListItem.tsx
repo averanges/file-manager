@@ -1,7 +1,7 @@
-import { useState, useEffect, SetStateAction } from 'react'
+import { useState, useEffect } from 'react'
 import { IUploadedDataItem } from '../../firebase/firebaseActions'
 import { useAppSelector } from '../../store/store/storeHooks'
-import { CalendarSVG, DotsSVG, FolderSVG } from '../../ui/svg/svg'
+import { CalendarSVG } from '../../ui/svg/svg'
 import { useLocation } from 'react-router-dom'
 import { ICurrentItem } from '../../modules/dataListTemplate/components/DataListTemplate'
 
@@ -40,7 +40,7 @@ interface TypeListItem extends IUploadedDataItem {
   url?: string,
   currentFileDetails?: ICurrentItem[],
   setCurrentFileDetails?: React.Dispatch<React.SetStateAction<ICurrentItem[]>>,
-  setOpenListItemMenu: React.Dispatch<React.SetStateAction<boolean>>
+  setOpenListItemMenu?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ListItem = ({
@@ -67,7 +67,7 @@ const ListItem = ({
 
 
   useEffect(() => {
-    if (setCurrentFileDetails) {
+    if (setCurrentFileDetails && setOpenListItemMenu) {
         if (clicked) {
             setOpenListItemMenu(true);
             setCurrentFileDetails((prev) => [...prev, currentItem] as ICurrentItem[]);

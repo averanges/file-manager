@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/store/storeHooks'
 import { generateFolderLinks } from '../../pages/folderPage/components/FolderPage'
-import { FolderSVG, LeftArrowSvg, RightArrowSVG } from '../../ui/svg/svg'
+import { FolderSVG, LeftArrowSvg } from '../../ui/svg/svg'
 import { handleMoveAndCopy, handleOpenModal } from '../../store/slices/uiSlices'
 import { moveOrCopyFile } from '../../firebase/firebaseActions'
 import { handleActionSuccess } from '../../store/slices/managementSlice'

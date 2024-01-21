@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { useState } from 'react'
 import { DownArrowSVG, FolderSVG, RightArrowSVG } from '../../../ui/svg/svg'
 import { Link } from 'react-router-dom'
 import { IFolders } from './DashboardSidebar'
@@ -13,7 +13,7 @@ interface IFolderMenuItem {
 
 const FolderMenuItem = ({currentFolderLength, renderFolders, currentSubFolders, folderName, fullPath}: IFolderMenuItem) => {
     const [openSubFolders, setOpenSubFolders] = useState(false)
-    const addLeftOffset = decodeURIComponent(fullPath).split('/').filter(el => el !== '').length
+    // const addLeftOffset = decodeURIComponent(fullPath).split('/').filter(el => el !== '').length
     
     const toggleOpenSubFolders = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.preventDefault()

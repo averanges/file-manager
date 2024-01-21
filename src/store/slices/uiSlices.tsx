@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { IFileItem } from "../../components/cards/FileItem"
-import { ICurrentItem } from "../../modules/dataListTemplate/components/DataListTemplate"
 
 interface IActiveObj {
     isActive: boolean,

@@ -1,5 +1,4 @@
-import DashboardPage from "../../../pages/dashBoardPage/components/DashboardPage"
-import { FavoriteSVG, HomeSVG, SettingsSVG, TrashSVG, UpdateSVG } from "../../../ui/svg/svg"
+import { FavoriteSVG, HomeSVG, UpdateSVG } from "../../../ui/svg/svg"
 import { ISidebarButtons } from "./interfaces/ISidebarButtons"
 
 export const SidebarButtonsArray1: ISidebarButtons[] = [
