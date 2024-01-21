@@ -70,10 +70,6 @@ const openModalWindow = (): void => {
 }
 
   return (
-    <>
-        { windowWidth < 576 ? 
-        <MobileDashboardPage/>
-        :
         <div className="w-11/12 h-full flex">
             <div className="w-full xl:w-8/12 h-full flex flex-col gap-5">
                 <div className="flex justify-between px-6 h-2/12">
@@ -139,8 +135,7 @@ const openModalWindow = (): void => {
                     </div>
                 </div>
             </div>
-        </div>}
-    </>
+        </div>
   )
 }
 
