@@ -75,7 +75,7 @@ const openModalWindow = (): void => {
         <MobileDashboardPage/>
         :
         <div className="w-11/12 h-full flex">
-            <div className="w-full h-full flex flex-col gap-5">
+            <div className="w-full xl:w-[67%] h-full flex flex-col gap-5">
                 <div className="flex justify-between px-6 h-16">
                     <div className="flex flex-col gap-2">
                         <h2 className="text-2xl font-bold">My Cloud</h2>
