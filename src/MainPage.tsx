@@ -109,7 +109,6 @@ const MainPage = () => {
     };
   }, [])
 
-  console.log(scrollPosition)
   return (
   <div className='overflow-x-hidden bg-slate-100 overscroll-y-none scroll-smooth'>
     <div className='w-screen h-screen bg-slate-100 flex justify-center items-center relative flex-col'>

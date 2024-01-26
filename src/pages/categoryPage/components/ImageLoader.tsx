@@ -25,3 +25,5 @@ const ImageLoader = ({currentFolderData, setCurrentFileDetails, setOpenListItemM
 }
 
 export default ImageLoader
+
+{/* <div className ="bg-blue-opacity bg-[rgba(124,161,255,0.5)]"></div> */}

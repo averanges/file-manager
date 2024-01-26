@@ -66,7 +66,7 @@ const UserSettings = () => {
           </div>
           <div className='flex justify-around border-b-[1px] text-lg text-slate-600'>
               <button onClick={() => setOpenSubTab('basic')}
-                className={`relative after:w-full after:h-1 after:rounded-3xl after:bg-purple-prime after:rounded-b-sm
+                className={`relative after:w-full after:h-1 after:rounded-3xl after:bg-blue-opacity after:rounded-b-sm
                 ${openSubTab === "basic" ? "after:absolute" : "after:hidden"} hover:bg-slate-200/50 rounded-t-lg px-3 py-1 after:bottom-0 after:left-0`}>
                     Basic Details
               </button>

@@ -6,7 +6,7 @@ interface ICategoryTypes {
 }
 
 const categoryTypes: ICategoryTypes[] = [
-    {color: "rgba(124,161,255,0.5)", name: "Documents"},
+    {color: opacityColors.blueOpacityColor, name: "Documents"},
     {color: opacityColors.pinkOpacityColor, name: "Images"},
     {color: opacityColors.purpleOpacityColor, name: "Media & Music"},
     {color: opacityColors.orangeOpacityColor, name: "Other Files"},
