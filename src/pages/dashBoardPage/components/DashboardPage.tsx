@@ -23,7 +23,7 @@ const dispatch = useAppDispatch()
 const uploadedData = useSelector((state:RootState) => state.management.allData)
 const foldersData = useAppSelector(state => state.management.foldersList)
 
-const {images, audio, video, documents, othersFiles, allData} = useSelector((state:RootState) => state.management.fileTypedSizes)
+// const {images, audio, video, documents, othersFiles, allData} = useSelector((state:RootState) => state.management.fileTypedSizes)
 // const { dataSetDoughnut } = useDataSetDoughnut({ documentsFilesSize : documents,  imageFilesSize: images, mediaFilesSize: audio + video, otherFilesSize: othersFiles})
 
 const [deleteSuccess, setDeleteSuccess] = useState(false)
