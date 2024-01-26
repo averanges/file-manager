@@ -1,11 +1,11 @@
 import {useState, useEffect} from "react"
 import CategoryCard from "../../../components/cards/CategoryCard"
 import FolderCard from "../../../components/cards/FolderCard"
-// import { Doughnut } from "react-chartjs-2"
+import { Doughnut } from "react-chartjs-2"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { opacityColors } from "../../../consts/colors";
 import ListItem from "../../../components/cards/ListItem";
-// import { useDataSetDoughnut } from "../../../const";
+import { useDataSetDoughnut } from "../../../const";
 import { useAppDispatch, useAppSelector } from "../../../store/store/storeHooks";
 import { handleOpenModal } from "../../../store/slices/uiSlices";
 import { useSelector } from "react-redux";
@@ -23,8 +23,8 @@ const dispatch = useAppDispatch()
 const uploadedData = useSelector((state:RootState) => state.management.allData)
 const foldersData = useAppSelector(state => state.management.foldersList)
 
-// const {images, audio, video, documents, othersFiles, allData} = useSelector((state:RootState) => state.management.fileTypedSizes)
-// const { dataSetDoughnut } = useDataSetDoughnut({ documentsFilesSize : documents,  imageFilesSize: images, mediaFilesSize: audio + video, otherFilesSize: othersFiles})
+const {images, audio, video, documents, othersFiles, allData} = useSelector((state:RootState) => state.management.fileTypedSizes)
+const { dataSetDoughnut } = useDataSetDoughnut({ documentsFilesSize : documents,  imageFilesSize: images, mediaFilesSize: audio + video, otherFilesSize: othersFiles})
 
 const [deleteSuccess, setDeleteSuccess] = useState(false)
 const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -75,8 +75,8 @@ const openModalWindow = (): void => {
         <MobileDashboardPage/>
         :
         <div className="w-11/12 h-full flex">
-            <div className="w-full xl:w-full h-full flex flex-col gap-5 bg-red-500">
-                <div className="flex justify-between px-6 h-2/12">
+            <div className="w-full xl:w-full h-full flex flex-col gap-5">
+                <div className="flex justify-between px-6 h-[8%]">
                     <div className="flex flex-col gap-2">
                         <h2 className="text-2xl font-bold">My Cloud</h2>
                         <p className="text-slate-400">Hi <span className="text-xl">{auth.currentUser?.displayName}</span>, Welcome Back!</p>
@@ -85,7 +85,7 @@ const openModalWindow = (): void => {
                 <div className="px-6 h-[25%] flex gap-5 ">
                     {categoryTypes.map((el, idx) => <CategoryCard key={idx} name={el.name} color={el.color}/>)}
                 </div>
-                <div className="px-6 h-1/5 flex flex-col gap-5">
+                <div className="px-6 h-[20%] flex flex-col gap-5">
                     <div className="flex justify-between">
                         <p className="text-2xl font-bold">Recent Folders</p>
                         <Link to='/all-folders' className="text-orange-prime underline text-lg cursor-pointer">See More</Link>
@@ -104,7 +104,7 @@ const openModalWindow = (): void => {
                         }
                     </div>
                 </div>
-                <div className="px-6 w-full flex flex-col gap-2">
+                <div className="px-6 w-full h-[30%] flex flex-col gap-2">
                     <div className="flex justify-between">
                          <p className="text-2xl font-bold">Recent Files</p>
                          <Link to="/updates" className="text-orange-prime underline text-lg cursor-pointer">See More</Link>
@@ -129,7 +129,7 @@ const openModalWindow = (): void => {
                     </table>
                 </div>
             </div>
-            {/* <div className="hidden xl:w-[33%] xl:flex gap-10 flex-col items-center">
+            <div className="hidden xl:w-[33%] xl:flex gap-10 flex-col items-center">
                 <h2 className="text-2xl font-bold">Storage Details</h2>
                 <Doughnut data={dataSetDoughnut}/>
                 <div className="flex justify-center flex-col gap-2">
@@ -138,7 +138,7 @@ const openModalWindow = (): void => {
                         <p className="text-xl text-slate-400">of 5GB</p>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </div>}
     </>
   )
