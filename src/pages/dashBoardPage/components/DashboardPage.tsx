@@ -1,11 +1,11 @@
 import {useState, useEffect} from "react"
 import CategoryCard from "../../../components/cards/CategoryCard"
 import FolderCard from "../../../components/cards/FolderCard"
-import { Doughnut } from "react-chartjs-2"
+// import { Doughnut } from "react-chartjs-2"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { opacityColors } from "../../../consts/colors";
 import ListItem from "../../../components/cards/ListItem";
-import { useDataSetDoughnut } from "../../../const";
+// import { useDataSetDoughnut } from "../../../const";
 import { useAppDispatch, useAppSelector } from "../../../store/store/storeHooks";
 import { handleOpenModal } from "../../../store/slices/uiSlices";
 import { useSelector } from "react-redux";
@@ -24,7 +24,7 @@ const uploadedData = useSelector((state:RootState) => state.management.allData)
 const foldersData = useAppSelector(state => state.management.foldersList)
 
 const {images, audio, video, documents, othersFiles, allData} = useSelector((state:RootState) => state.management.fileTypedSizes)
-const { dataSetDoughnut } = useDataSetDoughnut({ documentsFilesSize : documents,  imageFilesSize: images, mediaFilesSize: audio + video, otherFilesSize: othersFiles})
+// const { dataSetDoughnut } = useDataSetDoughnut({ documentsFilesSize : documents,  imageFilesSize: images, mediaFilesSize: audio + video, otherFilesSize: othersFiles})
 
 const [deleteSuccess, setDeleteSuccess] = useState(false)
 const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -75,7 +75,7 @@ const openModalWindow = (): void => {
         <MobileDashboardPage/>
         :
         <div className="w-11/12 h-full flex">
-            <div className="w-full xl:w-[67%] h-full flex flex-col gap-5 bg-red-500">
+            <div className="w-full xl:w-full h-full flex flex-col gap-5 bg-red-500">
                 <div className="flex justify-between px-6 h-2/12">
                     <div className="flex flex-col gap-2">
                         <h2 className="text-2xl font-bold">My Cloud</h2>
