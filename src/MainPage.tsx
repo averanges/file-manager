@@ -115,7 +115,7 @@ const MainPage = () => {
     <div className='w-screen h-screen bg-slate-100 flex justify-center items-center relative flex-col'>
         <div style={{top: 150 - scrollPosition/2}} 
         className={`${visibleElements.zero ? "" : "-translate-x-48"} w-[10%] h-[40%] absolute delay-500
-        left-0 rounded-r-3xl shadow-lg shadow-slate-700 z-30 duration-1000 transition-transform`}>
+        left-0 rounded-r-3xl shadow-lg shadow-slate-700 z-30 duration-1000 transition-transform bg-[rgba(124,161,255,0.5)]`}>
           <img src={abstract1} alt="" className='object-cover rounded-r-3xl w-full h-full'/>
         </div>
         <div style={{top: 200 - scrollPosition/2}} 

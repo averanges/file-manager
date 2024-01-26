@@ -24,11 +24,11 @@ const UploadPopup = () => {
       if(!authorized || typeof(authorized) === 'undefined'){
         return <Navigate to="/auth/login" replace={true} />
       }
-      useEffect(() => {
-        if (uploadStart) {
-          setTimeout(() => setJumpDot(prevJump => !prevJump), 500)
-        }
-      }, [uploadStart, jumpDot])
+    useEffect(() => {
+      if (uploadStart) {
+        setTimeout(() => setJumpDot(prevJump => !prevJump), 500)
+      }
+    }, [uploadStart, jumpDot])
   return (
     <div>
         <div className={`absolute bottom-10 right-10 w-80 h-fit bg-white shadow-xl z-10 border-[1px]
