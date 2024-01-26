@@ -75,17 +75,17 @@ const openModalWindow = (): void => {
         <MobileDashboardPage/>
         :
         <div className="w-11/12 h-full flex">
-            <div className="w-full xl:w-full h-full flex flex-col gap-5">
-                <div className="flex justify-between px-6 h-[8%]">
+            <div className="w-full h-full flex flex-col gap-5">
+                <div className="flex justify-between px-6 h-16">
                     <div className="flex flex-col gap-2">
                         <h2 className="text-2xl font-bold">My Cloud</h2>
                         <p className="text-slate-400">Hi <span className="text-xl">{auth.currentUser?.displayName}</span>, Welcome Back!</p>
                     </div>
                 </div>
-                <div className="px-6 h-[25%] flex gap-5 ">
+                <div className="px-6 h-60 flex gap-5 ">
                     {categoryTypes.map((el, idx) => <CategoryCard key={idx} name={el.name} color={el.color}/>)}
                 </div>
-                <div className="px-6 h-[20%] flex flex-col gap-5">
+                <div className="px-6 h-48 flex flex-col gap-5">
                     <div className="flex justify-between">
                         <p className="text-2xl font-bold">Recent Folders</p>
                         <Link to='/all-folders' className="text-orange-prime underline text-lg cursor-pointer">See More</Link>
@@ -104,7 +104,7 @@ const openModalWindow = (): void => {
                         }
                     </div>
                 </div>
-                <div className="px-6 w-full h-[30%] flex flex-col gap-2">
+                <div className="px-6 w-full h-60 flex flex-col gap-2">
                     <div className="flex justify-between">
                          <p className="text-2xl font-bold">Recent Files</p>
                          <Link to="/updates" className="text-orange-prime underline text-lg cursor-pointer">See More</Link>
@@ -129,7 +129,7 @@ const openModalWindow = (): void => {
                     </table>
                 </div>
             </div>
-            <div className="hidden xl:w-[33%] xl:flex gap-10 flex-col items-center">
+            <div className="hidden min-w-[33%] xl:flex gap-10 flex-col items-center">
                 <h2 className="text-2xl font-bold">Storage Details</h2>
                 <Doughnut data={dataSetDoughnut}/>
                 <div className="flex justify-center flex-col gap-2">
