@@ -131,7 +131,7 @@ const openModalWindow = (): void => {
             </div>
             <div className="hidden min-w-[450px] xl:flex gap-10 flex-col items-center">
                 <h2 className="text-2xl font-bold">Storage Details</h2>
-                <Doughnut data={dataSetDoughnut}/>
+                <Doughnut data={dataSetDoughnut} width={450}/>
                 <div className="flex justify-center flex-col gap-2">
                     <p className="text-5xl font-bold">{allData.toFixed(0)}MB</p>
                     <div className="flex justify-center">
