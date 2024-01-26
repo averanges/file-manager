@@ -75,7 +75,7 @@ const openModalWindow = (): void => {
         <MobileDashboardPage/>
         :
         <div className="w-11/12 h-full flex">
-            <div className="w-full xl:w-[67%] h-full flex flex-col gap-5">
+            <div className="w-full xl:w-[67%] h-full flex flex-col gap-5 bg-red-500">
                 <div className="flex justify-between px-6 h-2/12">
                     <div className="flex flex-col gap-2">
                         <h2 className="text-2xl font-bold">My Cloud</h2>
@@ -129,7 +129,7 @@ const openModalWindow = (): void => {
                     </table>
                 </div>
             </div>
-            <div className="hidden xl:w-[33%] xl:flex gap-10 flex-col items-center">
+            {/* <div className="hidden xl:w-[33%] xl:flex gap-10 flex-col items-center">
                 <h2 className="text-2xl font-bold">Storage Details</h2>
                 <Doughnut data={dataSetDoughnut}/>
                 <div className="flex justify-center flex-col gap-2">
@@ -138,7 +138,7 @@ const openModalWindow = (): void => {
                         <p className="text-xl text-slate-400">of 5GB</p>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>}
     </>
   )
